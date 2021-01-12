@@ -9,7 +9,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Dawnstar\\FileManager": "src"
+            "Dawnstar\\FileManager\\": "src"
         },
         "files": [
             "src\\Http\\helpers.php"
