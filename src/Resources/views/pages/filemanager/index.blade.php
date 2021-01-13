@@ -1,77 +1,6 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+@extends('FileManagerView::layouts.app')
 
-    <title>Dawnstar - FileManager</title>
-
-    <meta name="description" content="Dashmix - Bootstrap 4 Admin Template &amp; UI Framework created by pixelcave and published on Themeforest">
-    <meta name="robots" content="noindex, nofollow">
-    <link rel="shortcut icon" href="assets/media/favicons/favicon.png">
-
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
-    <link rel="stylesheet" id="css-main" href="{{ fileManagerAsset('css/dashmix.min.css') }}">
-    <link rel="stylesheet" id="css-main" href="{{ fileManagerAsset('css/xpro.min.css') }}">
-</head>
-<body>
-<div id="page-container" class="sidebar-o side-scroll page-header-fixed page-header-dark">
-
-    <nav id="sidebar" aria-label="Main Navigation">
-        <div class="bg-header-dark">
-            <div class="content-header bg-white-10">
-                <a class="font-w600 text-white tracking-wide" href="javascript:void(0)">
-                    <span class="smini-hidden">
-                        Dawn<span class="opacity-75">star</span>
-                        <span class="font-w400">File Manager</span>
-                    </span>
-                </a>
-            </div>
-        </div>
-        <div class="js-sidebar-scroll">
-            <div class="content-side">
-                <ul class="nav-main">
-                    <li class="nav-main-item">
-                        <a class="nav-main-link active" href="db_file_hosting.html">
-                            <i class="nav-main-link-icon fa fa-rocket"></i>
-                            <span class="nav-main-link-name">All Files</span>
-                        </a>
-                    </li>
-                    <li class="nav-main-heading">Files</li>
-                    <li class="nav-main-item">
-                        <a class="nav-main-link" href="">
-                            <i class="nav-main-link-icon fa fa-file-word"></i>
-                            <span class="nav-main-link-name">Documents</span>
-                            <span class="nav-main-link-badge badge badge-pill badge-secondary">19</span>
-                        </a>
-                    </li>
-                    <li class="nav-main-item">
-                        <a class="nav-main-link" href="">
-                            <i class="nav-main-link-icon fa fa-file-image"></i>
-                            <span class="nav-main-link-name">Photos</span>
-                            <span class="nav-main-link-badge badge badge-pill badge-secondary">45</span>
-                        </a>
-                    </li>
-                    <li class="nav-main-item">
-                        <a class="nav-main-link" href="">
-                            <i class="nav-main-link-icon fa fa-file-video"></i>
-                            <span class="nav-main-link-name">Videos</span>
-                            <span class="nav-main-link-badge badge badge-pill badge-secondary">65</span>
-                        </a>
-                    </li>
-                    <li class="nav-main-item">
-                        <a class="nav-main-link" href="">
-                            <i class="nav-main-link-icon fa fa-file-audio"></i>
-                            <span class="nav-main-link-name">Audio</span>
-                            <span class="nav-main-link-badge badge badge-pill badge-secondary">28</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Header -->
+@section('content')
     <header id="page-header">
         <div class="content-header">
             <div class="row d-flex align-items-center w-100">
@@ -96,9 +25,6 @@
             </div>
         </div>
     </header>
-    <!-- END Header -->
-
-    <!-- Main Container -->
     <main id="main-container">
 
         <!-- Page Content -->
@@ -106,7 +32,7 @@
             <div class="col-md-12 order-md-0 bg-body-dark">
                 <div class="content">
                     <div class="row items-push">
-                        <div class="col-md-3 d-flex align-items-center">
+                        <div class="col-md-2 d-flex align-items-center">
                             <!-- Example File -->
                             <div class="options-container fx-overlay-zoom-out w-100">
                                 <!-- Example File Block -->
@@ -147,7 +73,7 @@
                             </div>
                             <!-- END Example File -->
                         </div>
-                        <div class="col-md-3 d-flex align-items-center">
+                        <div class="col-md-2 d-flex align-items-center">
                             <!-- Example File -->
                             <div class="options-container fx-overlay-zoom-out w-100">
                                 <!-- Example File Block -->
@@ -188,7 +114,7 @@
                             </div>
                             <!-- END Example File -->
                         </div>
-                        <div class="col-md-3 d-flex align-items-center">
+                        <div class="col-md-2 d-flex align-items-center">
                             <!-- Example File -->
                             <div class="options-container fx-overlay-zoom-out w-100">
                                 <!-- Example File Block -->
@@ -229,7 +155,7 @@
                             </div>
                             <!-- END Example File -->
                         </div>
-                        <div class="col-md-3 d-flex align-items-center">
+                        <div class="col-md-2 d-flex align-items-center">
                             <!-- Example File -->
                             <div class="options-container fx-overlay-zoom-out w-100">
                                 <!-- Example File Block -->
@@ -270,7 +196,7 @@
                             </div>
                             <!-- END Example File -->
                         </div>
-                        <div class="col-md-3 d-flex align-items-center">
+                        <div class="col-md-2 d-flex align-items-center">
                             <!-- Example File -->
                             <div class="options-container fx-overlay-zoom-out w-100">
                                 <!-- Example File Block -->
@@ -311,7 +237,7 @@
                             </div>
                             <!-- END Example File -->
                         </div>
-                        <div class="col-md-3 d-flex align-items-center">
+                        <div class="col-md-2 d-flex align-items-center">
                             <!-- Example File -->
                             <div class="options-container fx-overlay-zoom-out w-100">
                                 <!-- Example File Block -->
@@ -352,7 +278,7 @@
                             </div>
                             <!-- END Example File -->
                         </div>
-                        <div class="col-md-3 d-flex align-items-center">
+                        <div class="col-md-2 d-flex align-items-center">
                             <!-- Example File -->
                             <div class="options-container fx-overlay-zoom-out w-100">
                                 <!-- Example File Block -->
@@ -395,11 +321,69 @@
                         </div>
                     </div>
                 </div>
+
+
             </div>
         </div>
     </main>
-</div>
+    <footer id="page-footer" class="bg-white-90">
+        <div class="content py-0">
+            <div class="row">
+                <div class="col-md-10">
+                    <div class="selectedFiles text-center">
+                        <div class="py-3">
+                            <img class="img-avatar" src="assets/media/avatars/avatar4.jpg" alt="">
+                            <div class="font-size-sm text-muted">Graphic Designer</div>
+                        </div>
+                        <div class="py-3">
+                            <img class="img-avatar" src="assets/media/avatars/avatar5.jpg" alt="">
+                            <div class="font-size-sm text-muted">Photographer</div>
+                        </div>
+                        <div class="py-3">
+                            <img class="img-avatar" src="assets/media/avatars/avatar6.jpg" alt="">
+                            <div class="font-size-sm text-muted">Web Developer</div>
+                        </div>
+                        <div class="py-3">
+                            <img class="img-avatar" src="assets/media/avatars/avatar1.jpg" alt="">
+                            <div class="font-size-sm text-muted">Web Designer</div>
+                        </div>
+                        <div class="py-3">
+                            <img class="img-avatar" src="assets/media/avatars/avatar2.jpg" alt="">
+                            <div class="font-size-sm text-muted">Font Designer</div>
+                        </div>
+                        <div class="py-3">
+                            <img class="img-avatar" src="assets/media/avatars/avatar3.jpg" alt="">
+                            <div class="font-size-sm text-muted">Artist</div>
+                        </div>
+                        <div class="py-3">
+                            <img class="img-avatar" src="assets/media/avatars/avatar2.jpg" alt="">
+                            <div class="font-size-sm text-muted">Font Designer</div>
+                        </div>
+                        <div class="py-3">
+                            <img class="img-avatar" src="assets/media/avatars/avatar3.jpg" alt="">
+                            <div class="font-size-sm text-muted">Artist</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2 m-auto text-center">
+                    <button class="btn btn-primary"><i class="fa fa-plus"></i> Ekle </button>
+                </div>
+            </div>
+        </div>
+    </footer>
+@endsection
 
-<script src="{{ fileManagerAsset('js/dashmix.core.min.js') }}"></script>
-</body>
-</html>
+@push('styles')
+    <link rel="stylesheet" href="{{ fileManagerAsset('plugins/slick-carousel/slick.css') }}">
+    <link rel="stylesheet" href="{{ fileManagerAsset('plugins/slick-carousel/slick-theme.css') }}">
+@endpush
+
+@push('scripts')
+    <script src="{{ fileManagerAsset('plugins/slick-carousel/slick.min.js') }}"></script>
+    <script>
+        $('.selectedFiles').slick({
+            slidesToShow: 6,
+            infinite: false
+        });
+    </script>
+@endpush
