@@ -18,6 +18,7 @@ class FileManagerServiceProvider extends ServiceProvider
     {
         $this->loadViewsFrom(__DIR__ . '/Resources/views', 'FileManagerView');
         $this->publishes([__DIR__ . '/Assets' => public_path('vendor/filemanager/assets')], 'FileManagerPublish');
+        $this->loadMigrationsFrom(__DIR__ . '/Database/migrations');
     }
 }
 

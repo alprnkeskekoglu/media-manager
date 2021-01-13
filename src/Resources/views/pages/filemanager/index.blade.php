@@ -32,27 +32,28 @@
             <div class="col-md-12 order-md-0 bg-body-dark">
                 <div class="content">
                     <div class="row items-push">
+                        @foreach($medias as $media)
                         <div class="col-md-2 d-flex align-items-center">
                             <!-- Example File -->
                             <div class="options-container fx-overlay-zoom-out w-100">
                                 <!-- Example File Block -->
-                                <div class="options-item block block-rounded bg-body mb-0">
+                                <div class="options-item block block-rounded bg-body mb-0" style="height: 220px">
                                     <div class="block-content text-center">
-                                        <p class="mb-2 overflow-hidden">
-                                            <img class="img-fluid" src="assets/media/photos/photo22.jpg" alt="">
-                                        </p>
+                                        <div class="mb-2 overflow-hidden" style="height: 120px">
+                                            <img class="img-fluid rounded" style="max-height: 120px" src="{{ asset($media->path . '/' . $media->fullname) }}" alt="">
+                                        </div>
                                         <p class="font-w600 mb-0">
-                                            background_1.jpg
+                                            {!! $media->fullname !!}
                                         </p>
                                         <p class="font-size-sm text-muted">
-                                            0.9mb
+                                            {!! unitSizeForHuman($media->size) !!}
                                         </p>
                                     </div>
                                 </div>
                                 <!-- END Example File Block -->
 
                                 <!-- Example File Hover Options -->
-                                <div class="options-overlay rounded-lg bg-white-50">
+                                <div class="options-overlay bg-black-75">
                                     <div class="options-overlay-content">
                                         <div class="mb-3">
                                             <a class="btn btn-hero-light" href="javascript:void(0)">
@@ -73,88 +74,7 @@
                             </div>
                             <!-- END Example File -->
                         </div>
-                        <div class="col-md-2 d-flex align-items-center">
-                            <!-- Example File -->
-                            <div class="options-container fx-overlay-zoom-out w-100">
-                                <!-- Example File Block -->
-                                <div class="options-item block block-rounded bg-body mb-0">
-                                    <div class="block-content text-center">
-                                        <p class="mb-2 overflow-hidden">
-                                            <img class="img-fluid" src="assets/media/photos/photo21.jpg" alt="">
-                                        </p>
-                                        <p class="font-w600 mb-0">
-                                            background_2.jpg
-                                        </p>
-                                        <p class="font-size-sm text-muted">
-                                            3.4mb
-                                        </p>
-                                    </div>
-                                </div>
-                                <!-- END Example File Block -->
-
-                                <!-- Example File Hover Options -->
-                                <div class="options-overlay rounded-lg bg-white-50">
-                                    <div class="options-overlay-content">
-                                        <div class="mb-3">
-                                            <a class="btn btn-hero-light" href="javascript:void(0)">
-                                                <i class="fa fa-eye text-primary mr-1"></i> View
-                                            </a>
-                                        </div>
-                                        <div class="btn-group">
-                                            <a class="btn btn-sm btn-light" href="javascript:void(0)">
-                                                <i class="fa fa-download text-black mr-1"></i>
-                                            </a>
-                                            <a class="btn btn-sm btn-light" href="javascript:void(0)">
-                                                <i class="fa fa-trash text-danger mr-1"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- END Example File Hover Options -->
-                            </div>
-                            <!-- END Example File -->
-                        </div>
-                        <div class="col-md-2 d-flex align-items-center">
-                            <!-- Example File -->
-                            <div class="options-container fx-overlay-zoom-out w-100">
-                                <!-- Example File Block -->
-                                <div class="options-item block block-rounded bg-body mb-0">
-                                    <div class="block-content text-center">
-                                        <p class="mb-2 overflow-hidden">
-                                            <img class="img-fluid" src="assets/media/photos/photo24.jpg" alt="">
-                                        </p>
-                                        <p class="font-w600 mb-0">
-                                            background_3.jpg
-                                        </p>
-                                        <p class="font-size-sm text-muted">
-                                            2.3mb
-                                        </p>
-                                    </div>
-                                </div>
-                                <!-- END Example File Block -->
-
-                                <!-- Example File Hover Options -->
-                                <div class="options-overlay rounded-lg bg-white-50">
-                                    <div class="options-overlay-content">
-                                        <div class="mb-3">
-                                            <a class="btn btn-hero-light" href="javascript:void(0)">
-                                                <i class="fa fa-eye text-primary mr-1"></i> View
-                                            </a>
-                                        </div>
-                                        <div class="btn-group">
-                                            <a class="btn btn-sm btn-light" href="javascript:void(0)">
-                                                <i class="fa fa-download text-black mr-1"></i>
-                                            </a>
-                                            <a class="btn btn-sm btn-light" href="javascript:void(0)">
-                                                <i class="fa fa-trash text-danger mr-1"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- END Example File Hover Options -->
-                            </div>
-                            <!-- END Example File -->
-                        </div>
+                        @endforeach
                         <div class="col-md-2 d-flex align-items-center">
                             <!-- Example File -->
                             <div class="options-container fx-overlay-zoom-out w-100">

@@ -13,13 +13,13 @@
         <div class="content-side">
             <ul class="nav-main">
                 <li class="nav-main-item mb-3">
-                    <a class="nav-main-link btn-alt-success" href="{{ route('dawnstar.filemanager.upload') }}">
+                    <a class="nav-main-link btn-alt-success" id="createBtn" href="{{ route('dawnstar.filemanager.create') }}">
                         <i class="nav-main-link-icon fa fa-plus"></i>
                         <span class="nav-main-link-name">Upload New</span>
                     </a>
                 </li>
                 <li class="nav-main-item">
-                    <a class="nav-main-link active" href="{{ route('dawnstar.filemanager.index') }}">
+                    <a class="nav-main-link active" id="indexBtn" href="{{ route('dawnstar.filemanager.index') }}">
                         <i class="nav-main-link-icon fa fa-rocket"></i>
                         <span class="nav-main-link-name">All Files</span>
                     </a>

@@ -56,11 +56,29 @@
     <script>
         Dropzone.autoDiscover = false;
         var myDropzone = new Dropzone('div#dropzone', {
-            url: "#",
-            paramName: 'file',
-            maxFiles: 10,
+            url: "{{ route('dawnstar.filemanager.uploadFromComputer') }}",
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            paramName: 'files',
             maxFilesize: 2048, //MB
             timeout: 180000, //ms
-        })
+            uploadMultiple: true
+        });
+
+        myDropzone.on('error', function (response) {
+           if(response.xhr) {
+               var error = JSON.parse(response.xhr.response);
+               showErrorModal(error.message);
+           }
+        });
+
+        myDropzone.on('success', function (response) {
+             $('#indexBtn').trigger('click');
+        });
+
+        function showErrorModal(message) {
+            alert(message);
+        }
     </script>
 @endpush
