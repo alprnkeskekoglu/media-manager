@@ -5,6 +5,27 @@ function fileManagerAsset($path)
 {
     return asset('vendor/filemanager/assets/' . $path);
 }
+
+function defaultImage() {
+    return 'https://via.placeholder.com/150';
+}
+
+function media(int $id, int $width = null, int $height = null) {
+    $mediaFoundation = new \Dawnstar\FileManager\Foundation\Media();
+    $media = $mediaFoundation
+        ->setId($id);
+
+    if($width) {
+        $media = $media->setResizeWidth($width);
+    }
+
+    if($height) {
+        $media = $media->setResizeHeight($height);
+    }
+
+    return $media->getMedia();
+}
+
 function unitSizeForHuman(int $bytes): string
 {
     $returnByte = $bytes;
@@ -19,7 +40,7 @@ function unitSizeForHuman(int $bytes): string
         $unit = 'KB';
     } elseif ($bytes >= 0) {
         $returnByte = $bytes;
-        $unit = 'byte';
+        $unit = 'B';
     } else {
         trigger_error('Bytes must be bigger then 0.', E_USER_ERROR);
     }

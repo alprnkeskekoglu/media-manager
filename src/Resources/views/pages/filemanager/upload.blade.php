@@ -37,7 +37,7 @@
                                 <input type="text" class="form-control" id="url" name="url" placeholder="Link'i yapıştır">
                             </div>
                             <div class="col-md-2">
-                                <button class="btn btn-primary">Upload</button>
+                                <button class="btn btn-primary" id="uploadFromUrl">Upload</button>
                             </div>
                         </div>
                     </div>
@@ -77,8 +77,30 @@
              $('#indexBtn').trigger('click');
         });
 
+        $('#uploadFromUrl').click(function () {
+            var url = $('#url').val();
+
+            $.ajax({
+                'url': '{{ route('dawnstar.filemanager.uploadFromUrl') }}',
+                'method': 'POST',
+                'data': {'url': url, '_token': '{{ csrf_token() }}'},
+                success: function (response) {
+                    showSuccessModal(response.message);
+                    $('#indexBtn').trigger('click');
+                },
+                error: function(response) {
+                    showErrorModal(response.responseJSON.message);
+                }
+
+            })
+        });
+
+        function showSuccessModal(message) {
+            alert('SUCCESS!! ' + message);
+        }
+
         function showErrorModal(message) {
-            alert(message);
+            alert('ERROR!! ' + message);
         }
     </script>
 @endpush

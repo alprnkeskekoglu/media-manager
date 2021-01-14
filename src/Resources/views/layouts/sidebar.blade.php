@@ -13,7 +13,7 @@
         <div class="content-side">
             <ul class="nav-main">
                 <li class="nav-main-item mb-3">
-                    <a class="nav-main-link btn-alt-success" id="createBtn" href="{{ route('dawnstar.filemanager.create') }}">
+                    <a class="nav-main-link btn-alt-success" id="createBtn" href="{{ route('dawnstar.filemanager.upload') }}">
                         <i class="nav-main-link-icon fa fa-plus"></i>
                         <span class="nav-main-link-name">Upload New</span>
                     </a>
@@ -50,6 +50,13 @@
                     <a class="nav-main-link" href="">
                         <i class="nav-main-link-icon fa fa-file-audio"></i>
                         <span class="nav-main-link-name">Audio</span>
+                        <span class="nav-main-link-badge badge badge-pill badge-secondary">28</span>
+                    </a>
+                </li>
+                <li class="nav-main-item">
+                    <a class="nav-main-link" href="{{ route('dawnstar.filemanager.trash') }}">
+                        <i class="nav-main-link-icon fa fa-trash"></i>
+                        <span class="nav-main-link-name">Çöp Kutusu</span>
                         <span class="nav-main-link-badge badge badge-pill badge-secondary">28</span>
                     </a>
                 </li>

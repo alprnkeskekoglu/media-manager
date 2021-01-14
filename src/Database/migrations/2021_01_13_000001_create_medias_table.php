@@ -17,6 +17,7 @@ class CreateMediasTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedInteger('media_id')->nullable();
             $table->string('type')->default('original');
+            $table->string('uploaded_place')->default('panel');
             $table->string('path');
             $table->string('fullname');
             $table->string('upload_name');

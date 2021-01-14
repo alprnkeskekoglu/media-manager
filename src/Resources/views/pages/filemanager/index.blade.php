@@ -40,9 +40,19 @@
                                 <div class="options-item block block-rounded bg-body mb-0" style="height: 220px">
                                     <div class="block-content text-center">
                                         <div class="mb-2 overflow-hidden" style="height: 120px">
-                                            <img class="img-fluid rounded" style="max-height: 120px" src="{{ asset($media->path . '/' . $media->fullname) }}" alt="">
+                                            @if($media->mime_class == 'image')
+                                                <img class="img-fluid rounded" style="max-height: 120px" src="{{ $media->url }}">
+                                            @elseif($media->mime_class == 'video')
+                                                <i class="fa fa-fw fa-5x fa-file-video text-default"></i>
+                                            @elseif($media->mime_class == 'audio')
+                                                <i class="fa fa-fw fa-5x fa-file-audio text-primary"></i>
+                                            @elseif($media->mime_class == 'text')
+                                                <i class="fa fa-fw fa-5x fa-file-alt text-black"></i>
+                                            @elseif($media->mime_type == 'application/pdf')
+                                                <i class="fa fa-fw fa-5x fa-file-pdf text-danger"></i>
+                                            @endif
                                         </div>
-                                        <p class="font-w600 mb-0">
+                                        <p class="font-w600 mb-0" style="font-size: 12px">
                                             {!! $media->fullname !!}
                                         </p>
                                         <p class="font-size-sm text-muted">
@@ -64,7 +74,7 @@
                                             <a class="btn btn-sm btn-light" href="javascript:void(0)">
                                                 <i class="fa fa-download text-black mr-1"></i>
                                             </a>
-                                            <a class="btn btn-sm btn-light" href="javascript:void(0)">
+                                            <a class="btn btn-sm btn-light deleteBtn" data-id="{{ $media->id }}" href="javascript:void(0)">
                                                 <i class="fa fa-trash text-danger mr-1"></i>
                                             </a>
                                         </div>
@@ -75,174 +85,8 @@
                             <!-- END Example File -->
                         </div>
                         @endforeach
-                        <div class="col-md-2 d-flex align-items-center">
-                            <!-- Example File -->
-                            <div class="options-container fx-overlay-zoom-out w-100">
-                                <!-- Example File Block -->
-                                <div class="options-item block block-rounded bg-body mb-0">
-                                    <div class="block-content text-center">
-                                        <p class="mb-2 overflow-hidden">
-                                            <i class="fa fa-fw fa-4x fa-file-alt text-black"></i>
-                                        </p>
-                                        <p class="font-w600 mb-0">
-                                            notes.txt
-                                        </p>
-                                        <p class="font-size-sm text-muted">
-                                            3kb
-                                        </p>
-                                    </div>
-                                </div>
-                                <!-- END Example File Block -->
-
-                                <!-- Example File Hover Options -->
-                                <div class="options-overlay rounded-lg bg-white-50">
-                                    <div class="options-overlay-content">
-                                        <div class="mb-3">
-                                            <a class="btn btn-hero-light" href="javascript:void(0)">
-                                                <i class="fa fa-eye text-primary mr-1"></i> View
-                                            </a>
-                                        </div>
-                                        <div class="btn-group">
-                                            <a class="btn btn-sm btn-light" href="javascript:void(0)">
-                                                <i class="fa fa-download text-black mr-1"></i>
-                                            </a>
-                                            <a class="btn btn-sm btn-light" href="javascript:void(0)">
-                                                <i class="fa fa-trash text-danger mr-1"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- END Example File Hover Options -->
-                            </div>
-                            <!-- END Example File -->
-                        </div>
-                        <div class="col-md-2 d-flex align-items-center">
-                            <!-- Example File -->
-                            <div class="options-container fx-overlay-zoom-out w-100">
-                                <!-- Example File Block -->
-                                <div class="options-item block block-rounded bg-body mb-0">
-                                    <div class="block-content text-center">
-                                        <p class="mb-2 overflow-hidden">
-                                            <i class="fa fa-fw fa-4x fa-file-excel text-danger"></i>
-                                        </p>
-                                        <p class="font-w600 mb-0">
-                                            Accounting.xlsx
-                                        </p>
-                                        <p class="font-size-sm text-muted">
-                                            33kb
-                                        </p>
-                                    </div>
-                                </div>
-                                <!-- END Example File Block -->
-
-                                <!-- Example File Hover Options -->
-                                <div class="options-overlay rounded-lg bg-white-50">
-                                    <div class="options-overlay-content">
-                                        <div class="mb-3">
-                                            <a class="btn btn-hero-light" href="javascript:void(0)">
-                                                <i class="fa fa-eye text-primary mr-1"></i> View
-                                            </a>
-                                        </div>
-                                        <div class="btn-group">
-                                            <a class="btn btn-sm btn-light" href="javascript:void(0)">
-                                                <i class="fa fa-download text-black mr-1"></i>
-                                            </a>
-                                            <a class="btn btn-sm btn-light" href="javascript:void(0)">
-                                                <i class="fa fa-trash text-danger mr-1"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- END Example File Hover Options -->
-                            </div>
-                            <!-- END Example File -->
-                        </div>
-                        <div class="col-md-2 d-flex align-items-center">
-                            <!-- Example File -->
-                            <div class="options-container fx-overlay-zoom-out w-100">
-                                <!-- Example File Block -->
-                                <div class="options-item block block-rounded bg-body mb-0">
-                                    <div class="block-content text-center">
-                                        <p class="mb-2 overflow-hidden">
-                                            <i class="fa fa-fw fa-4x fa-file-word text-default"></i>
-                                        </p>
-                                        <p class="font-w600 mb-0">
-                                            Research.docx
-                                        </p>
-                                        <p class="font-size-sm text-muted">
-                                            50kb
-                                        </p>
-                                    </div>
-                                </div>
-                                <!-- END Example File Block -->
-
-                                <!-- Example File Hover Options -->
-                                <div class="options-overlay rounded-lg bg-white-50">
-                                    <div class="options-overlay-content">
-                                        <div class="mb-3">
-                                            <a class="btn btn-hero-light" href="javascript:void(0)">
-                                                <i class="fa fa-eye text-primary mr-1"></i> View
-                                            </a>
-                                        </div>
-                                        <div class="btn-group">
-                                            <a class="btn btn-sm btn-light" href="javascript:void(0)">
-                                                <i class="fa fa-download text-black mr-1"></i>
-                                            </a>
-                                            <a class="btn btn-sm btn-light" href="javascript:void(0)">
-                                                <i class="fa fa-trash text-danger mr-1"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- END Example File Hover Options -->
-                            </div>
-                            <!-- END Example File -->
-                        </div>
-                        <div class="col-md-2 d-flex align-items-center">
-                            <!-- Example File -->
-                            <div class="options-container fx-overlay-zoom-out w-100">
-                                <!-- Example File Block -->
-                                <div class="options-item block block-rounded bg-body mb-0">
-                                    <div class="block-content text-center">
-                                        <p class="mb-2 overflow-hidden">
-                                            <i class="fa fa-fw fa-4x fa-file-powerpoint text-warning"></i>
-                                        </p>
-                                        <p class="font-w600 mb-0">
-                                            Presentaton.pptx
-                                        </p>
-                                        <p class="font-size-sm text-muted">
-                                            4.5mb
-                                        </p>
-                                    </div>
-                                </div>
-                                <!-- END Example File Block -->
-
-                                <!-- Example File Hover Options -->
-                                <div class="options-overlay rounded-lg bg-white-50">
-                                    <div class="options-overlay-content">
-                                        <div class="mb-3">
-                                            <a class="btn btn-hero-light" href="javascript:void(0)">
-                                                <i class="fa fa-eye text-primary mr-1"></i> View
-                                            </a>
-                                        </div>
-                                        <div class="btn-group">
-                                            <a class="btn btn-sm btn-light" href="javascript:void(0)">
-                                                <i class="fa fa-download text-black mr-1"></i>
-                                            </a>
-                                            <a class="btn btn-sm btn-light" href="javascript:void(0)">
-                                                <i class="fa fa-trash text-danger mr-1"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- END Example File Hover Options -->
-                            </div>
-                            <!-- END Example File -->
-                        </div>
                     </div>
                 </div>
-
-
             </div>
         </div>
     </main>
@@ -296,14 +140,59 @@
 @push('styles')
     <link rel="stylesheet" href="{{ fileManagerAsset('plugins/slick-carousel/slick.css') }}">
     <link rel="stylesheet" href="{{ fileManagerAsset('plugins/slick-carousel/slick-theme.css') }}">
+    <link rel="stylesheet" href="{{ dawnstarAsset('plugins/sweetalert2/sweetalert2.min.css') }}">
 @endpush
 
 @push('scripts')
     <script src="{{ fileManagerAsset('plugins/slick-carousel/slick.min.js') }}"></script>
+    <script src="{{ dawnstarAsset('plugins/sweetalert2/sweetalert2.min.js') }}"></script>
     <script>
         $('.selectedFiles').slick({
             slidesToShow: 6,
             infinite: false
+        });
+    </script>
+
+    <script>
+        jQuery('.deleteBtn').on('click', e => {
+            var mediaId = e.currentTarget.getAttribute('data-id');
+            swal.fire({
+                title: '{{ __('DawnstarLang::general.swal.title') }}',
+                text: '{{ __('DawnstarLang::general.swal.subtitle') }}',
+                icon: 'warning',
+                showCancelButton: true,
+                customClass: {
+                    confirmButton: 'btn btn-danger m-1',
+                    cancelButton: 'btn btn-secondary m-1'
+                },
+                confirmButtonText: '{{ __('DawnstarLang::general.swal.confirm_btn') }}',
+                cancelButtonText: '{{ __('DawnstarLang::general.swal.cancel_btn') }}',
+                html: false,
+                preConfirm: e => {
+                    return new Promise(resolve => {
+                        setTimeout(() => {
+                            resolve();
+                        }, 50);
+                    });
+                }
+            }).then(result => {
+                if (result.value) {
+                    $.ajax({
+                        'url': '{{ route('dawnstar.filemanager.delete') }}',
+                        'method': 'POST',
+                        'data': {'media_id': mediaId, '_token': '{{ csrf_token() }}'},
+                        success: function (response) {
+                            swal.fire('{{ __('DawnstarLang::general.swal.success.title') }}', '{{ __('DawnstarLang::general.swal.success.subtitle') }}', 'success');
+                            setTimeout(function () {
+                                location.reload();
+                            }, 1000);
+                        },
+                        error: function (response) {
+                            swal.fire('{{ __('DawnstarLang::general.swal.error.title') }}', '{{ __('DawnstarLang::general.swal.error.subtitle') }}', 'error');
+                        }
+                    })
+                }
+            });
         });
     </script>
 @endpush
