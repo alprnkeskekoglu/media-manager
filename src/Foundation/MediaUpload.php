@@ -7,7 +7,6 @@ use File;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-
 use Dotenv\Exception\InvalidFileException;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 
@@ -40,6 +39,7 @@ class MediaUpload
         'application/vnd.ms-excel',
         'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        'application/wps-office.xlsx'
     ];
 
     public function __construct()
@@ -55,14 +55,14 @@ class MediaUpload
         }
 
         if(count($files) == 0) {
-            throw new FileNotFoundException('Herhangi bir dosya gönderilmedi.');
+            throw new FileNotFoundException(__('FileManagerLang::upload.errors.no_file'));
         }
 
         foreach ($files as $file) {
             $mimeType = $file->getClientMimeType();
 
             if(! in_array($mimeType, $this->mimeTypes)) {
-                throw new InvalidFileException('Dosya tipi uygun değildir.');
+                throw new InvalidFileException(__('FileManagerLang::upload.errors.mime_type'));
             }
 
             $tempFilePath = Storage::disk('local')->put('/media_temp', $file);
@@ -84,7 +84,7 @@ class MediaUpload
         $mimeType = get_headers($url, 1)['Content-Type'] ?? null;
 
         if(! in_array($mimeType, $this->mimeTypes)) {
-            throw new InvalidFileException('Dosya tipi uygun değildir.');
+            throw new InvalidFileException(__('FileManagerLang::upload.errors.mime_type'));
         }
 
         $content = file_get_contents($url);

@@ -10,10 +10,10 @@
             <div class="block block-rounded">
                 <ul class="nav nav-tabs nav-tabs-alt" data-toggle="tabs" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link active" href="#dropzoneTab">Uploads from Computer</a>
+                        <a class="nav-link active" href="#dropzoneTab">{{ __('FileManagerLang::upload.from_computer') }}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#linkTab">Uploads from link</a>
+                        <a class="nav-link" href="#linkTab">{{ __('FileManagerLang::upload.from_url') }}</a>
                     </li>
                 </ul>
                 <div class="block-content tab-content">
@@ -21,11 +21,11 @@
                         <div class="p-3">
                             <div id="dropzone" class="dropzone">
                                 <div class="dz-message">
-                                    Yüklemek için dosyaları bu alana sürükleyiniz
+                                    {{ __('FileManagerLang::upload.dropzone.text_1') }}
                                     <br>
-                                    ya da
+                                    {{ __('FileManagerLang::upload.dropzone.text_2') }}
                                     <br>
-                                    Dosya Seçiniz
+                                    {{ __('FileManagerLang::upload.dropzone.text_3') }}
                                 </div>
                             </div>
 
@@ -34,10 +34,10 @@
                     <div class="tab-pane" id="linkTab" role="tabpanel">
                         <div class="form-group row">
                             <div class="col-md-10">
-                                <input type="text" class="form-control" id="url" name="url" placeholder="Link'i yapıştır">
+                                <input type="text" class="form-control" id="url" name="url" placeholder="{{ __('FileManagerLang::upload.paste_url') }}">
                             </div>
                             <div class="col-md-2">
-                                <button class="btn btn-primary" id="uploadFromUrl">Upload</button>
+                                <button class="btn btn-primary" id="uploadFromUrl">{{ __('FileManagerLang::upload.upload') }}</button>
                             </div>
                         </div>
                     </div>
@@ -74,7 +74,7 @@
         });
 
         myDropzone.on('success', function (response) {
-             $('#indexBtn').trigger('click');
+            window.location.href = '{{ route('dawnstar.filemanager.index') }}';
         });
 
         $('#uploadFromUrl').click(function () {
@@ -86,7 +86,7 @@
                 'data': {'url': url, '_token': '{{ csrf_token() }}'},
                 success: function (response) {
                     showSuccessModal(response.message);
-                    $('#indexBtn').trigger('click');
+                    window.location.href = '{{ route('dawnstar.filemanager.index') }}';
                 },
                 error: function(response) {
                     showErrorModal(response.responseJSON.message);

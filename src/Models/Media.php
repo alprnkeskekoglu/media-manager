@@ -16,7 +16,7 @@ class Media extends Model
     public function getUrlAttribute()
     {
         if($this->trashed()) {
-            if(file_exists(storage_path('/media_trash/' . $this->uploaded_place . $this->path . '/' . $this->fullname))) {
+            if(file_exists(storage_path('app/public/media_trash/' . $this->uploaded_place . $this->path . '/' . $this->fullname))) {
                 return url('/storage/media_trash/' . $this->uploaded_place . $this->path . '/' . $this->fullname);
             }
         }
@@ -24,7 +24,7 @@ class Media extends Model
         if(file_exists(public_path('/uploads/' . $this->uploaded_place . $this->path . '/' . $this->fullname))) {
             return url('/uploads/' . $this->uploaded_place . $this->path . '/' . $this->fullname);
         }
-        
+
         return defaultImage();
     }
 }
