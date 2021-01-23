@@ -1,6 +1,6 @@
 <?php
 
-namespace Dawnstar\Providers;
+namespace Dawnstar\FileManager\Providers;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
