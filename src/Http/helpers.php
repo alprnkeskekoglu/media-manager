@@ -26,6 +26,46 @@ function media(int $id, int $width = null, int $height = null) {
     return $media->getMedia();
 }
 
+function getMediaArray($media)
+{
+    $mimeClass = $media->mime_class;
+    if($mimeClass == 'image') {
+        $html = '<img class="img-fluid rounded" style="max-height: 120px" src="' . $media->url . '">';
+        $selectedHtml = '<img class="img-fluid rounded" style="max-height: 80px" src="' . $media->url . '">';
+    } elseif ($mimeClass == 'video') {
+        $html = '<i class="fa fa-fw fa-5x fa-file-video text-default"></i>';
+        $selectedHtml = '<i class="fa fa-fw fa-4x fa-file-video text-default"></i>';
+    } elseif($mimeClass == 'audio') {
+        $html = '<i class="fa fa-fw fa-5x fa-file-audio text-primary"></i>';
+        $selectedHtml = '<i class="fa fa-fw fa-4x fa-file-audio text-primary"></i>';
+    } elseif($mimeClass == 'text') {
+        $html = '<i class="fa fa-fw fa-5x fa-file-alt text-black"></i>';
+        $selectedHtml = '<i class="fa fa-fw fa-4x fa-file-alt text-black"></i>';
+    } elseif($mimeClass == 'application') {
+        if(in_array($media->extension, ['csv', 'xlsx', 'xls'])) {
+            $html = '<i class="fa fa-fw fa-5x fa-file-excel text-success"></i>';
+            $selectedHtml = '<i class="fa fa-fw fa-4x fa-file-excel text-success"></i>';
+        } elseif($media->mime_type == 'application/pdf') {
+            $html = '<i class="fa fa-fw fa-5x fa-file-pdf text-danger"></i>';
+            $selectedHtml = '<i class="fa fa-fw fa-4x fa-file-pdf text-danger"></i>';
+        }
+    } else {
+        $html = '<i class="fa fa-fw fa-5x fa-file text-gray-dark"></i>';
+        $selectedHtml = '<i class="fa fa-fw fa-4x fa-file text-gray-dark"></i>';
+    }
+
+    return [
+        'id' => $media->id,
+        'fullname' => $media->fullname,
+        'html' => $html,
+        'selected_html' => $selectedHtml,
+        'size' => unitSizeForHuman($media->size),
+        'is_trashed' => $media->trashed(),
+        'url' => $media->url,
+        'type' => (in_array($media->mime_class, ['image', 'video', 'audio']) ? $media->mime_class : 'file')
+    ];
+}
+
 function unitSizeForHuman(int $bytes): string
 {
     $returnByte = $bytes;

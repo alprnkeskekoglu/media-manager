@@ -68,13 +68,15 @@
                                                     <i class="fa fa-eye text-primary mr-1"></i> {{ trans.view }}
                                                 </a>
                                             </div>
-                                            <div class="btn-group">
-                                                <a class="btn btn-sm btn-light" href="javascript:void(0)" v-if="!media.is_trashed && selectedMedias[media.id] == undefined" @click="selectMedia(media)">
+                                            <div class="btn-group" v-if="!media.is_trashed && media.type == selectableType">
+                                                <a class="btn btn-sm btn-light" href="javascript:void(0)" v-if="selectedMedias[media.id] == undefined && (Object.keys(selectedMedias).length < maxMediaCount || maxMediaCount == -1)" @click="selectMedia(media)">
                                                     <i class="fa fa-check text-success mr-1"></i>
                                                 </a>
-                                                <a class="btn btn-sm btn-light" href="javascript:void(0)" v-else-if="!media.is_trashed && selectedMedias[media.id] != undefined" @click="selectMedia(media)">
+                                                <a class="btn btn-sm btn-light" href="javascript:void(0)" v-else-if="selectedMedias[media.id] != undefined" @click="selectMedia(media)">
                                                     <i class="fa fa-times text-warning mr-1"></i>
                                                 </a>
+                                            </div>
+                                            <div class="btn-group">
                                                 <a class="btn btn-sm btn-light" href="javascript:void(0)" v-if="media.is_trashed" @click="recoverMedia(media.id)">
                                                     <i class="fa fa-sync-alt text-success mr-1"></i>
                                                 </a>
@@ -93,11 +95,11 @@
         </main>
 
 
-        <footer id="page-footer" class="bg-white" style="height: 140px" v-if="Object.keys(selectedMedias).length > 0">
+        <footer id="page-footer" class="bg-white" style="height: 140px">
             <div class="content py-0">
                 <div class="row">
                     <div class="col-md-10">
-                        <splide :options="sliderSettings" ref="splide">
+                        <splide :options="sliderSettings" ref="splide" v-if="Object.keys(selectedMedias).length > 0">
                             <splide-slide v-for="(selectedMedia, index) in selectedMedias" v-bind:key="index">
                                 <a href="javascript:void(0);" @click="selectMedia(selectedMedia)" class="float-right"><i class="fa fa-times text-danger"></i></a>
                                 <div class="text-center d-inline-block">
@@ -110,7 +112,7 @@
                         </splide>
                     </div>
                     <div class="col-md-2 m-auto text-center">
-                        <button class="btn btn-primary"><i class="fa fa-plus"></i> {{ trans.add_files }}</button>
+                        <button class="btn btn-primary" @click="closeFileManager"><i class="fa fa-plus"></i> {{ trans.add_files }}</button>
                     </div>
                 </div>
             </div>
@@ -139,6 +141,8 @@ export default {
             selectedMedias: {},
             type: window.type,
             trans: window.trans,
+            maxMediaCount: window.maxMediaCount,
+            selectableType: window.selectableType,
             sliderSettings: {
                 perPage: 5,
                 perMove: 5,
@@ -153,7 +157,7 @@ export default {
     mounted() {
         this.getMediaFolders();
         this.getMedias();
-        console.log(window.trans);
+        this.getSelectedMedias();
     },
     methods: {
         getMediaFolders() {
@@ -175,8 +179,22 @@ export default {
                 self.medias = response.data.medias;
             });
         },
+        getSelectedMedias() {
+            let self = this;
+            axios.get(window.getSelectedMediaRoute, {
+                params: {
+                    selectedMediaIds: window.selectedMediaIds,
+                }
+            }).then(function (response) {
+                for (var id in response.data.selectedMedias) {
+                    var media = response.data.selectedMedias[id];
+                    self.$set(self.selectedMedias, media.id, media)
+                }
+            });
+        },
         selectMedia(media) {
 
+            console.log(this.selectedMedias);
             if(this.selectedMedias[media.id] === undefined) {
                 this.$set(this.selectedMedias, media.id, media)
             } else {
@@ -201,6 +219,10 @@ export default {
                     self.getMedias()
                 })
         },
+        closeFileManager() {
+            window.opener.handleFileManager(this.selectedMedias);
+            window.close();
+        }
     }
 }
 </script>

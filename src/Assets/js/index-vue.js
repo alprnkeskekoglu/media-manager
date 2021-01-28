@@ -8239,6 +8239,8 @@
 //
 //
 //
+//
+//
 
 
             /* harmony default export */ __webpack_exports__["default"] = ({
@@ -8257,6 +8259,8 @@
                         selectedMedias: {},
                         type: window.type,
                         trans: window.trans,
+                        maxMediaCount: window.maxMediaCount,
+                        selectableType: window.selectableType,
                         sliderSettings: {
                             perPage: 5,
                             perMove: 5,
@@ -8271,7 +8275,7 @@
                 mounted: function mounted() {
                     this.getMediaFolders();
                     this.getMedias();
-                    console.log(window.trans);
+                    this.getSelectedMedias();
                 },
                 methods: {
                     getMediaFolders: function getMediaFolders() {
@@ -8293,7 +8297,22 @@
                             self.medias = response.data.medias;
                         });
                     },
+                    getSelectedMedias: function getSelectedMedias() {
+                        var self = this;
+                        axios.get(window.getSelectedMediaRoute, {
+                            params: {
+                                selectedMediaIds: window.selectedMediaIds
+                            }
+                        }).then(function (response) {
+                            for (var id in response.data.selectedMedias) {
+                                var media = response.data.selectedMedias[id];
+                                self.$set(self.selectedMedias, media.id, media);
+                            }
+                        });
+                    },
                     selectMedia: function selectMedia(media) {
+                        console.log(this.selectedMedias);
+
                         if (this.selectedMedias[media.id] === undefined) {
                             this.$set(this.selectedMedias, media.id, media);
                         } else {
@@ -8319,6 +8338,10 @@
                         }).then(function (response) {
                             self.getMedias();
                         });
+                    },
+                    closeFileManager: function closeFileManager() {
+                        window.opener.handleFileManager(this.selectedMedias);
+                        window.close();
                     }
                 }
             });
@@ -27087,34 +27110,22 @@
                                                                                 )
                                                                             ]),
                                                                             _vm._v(" "),
-                                                                            _c("div", { staticClass: "btn-group" }, [
-                                                                                !media.is_trashed &&
-                                                                                _vm.selectedMedias[media.id] == undefined
-                                                                                    ? _c(
-                                                                                    "a",
-                                                                                    {
-                                                                                        staticClass: "btn btn-sm btn-light",
-                                                                                        attrs: { href: "javascript:void(0)" },
-                                                                                        on: {
-                                                                                            click: function($event) {
-                                                                                                return _vm.selectMedia(media)
-                                                                                            }
-                                                                                        }
-                                                                                    },
-                                                                                    [
-                                                                                        _c("i", {
-                                                                                            staticClass:
-                                                                                                "fa fa-check text-success mr-1"
-                                                                                        })
-                                                                                    ]
-                                                                                    )
-                                                                                    : !media.is_trashed &&
-                                                                                    _vm.selectedMedias[media.id] != undefined
-                                                                                    ? _c(
+                                                                            !media.is_trashed &&
+                                                                            media.type == _vm.selectableType
+                                                                                ? _c("div", { staticClass: "btn-group" }, [
+                                                                                    _vm.selectedMedias[media.id] ==
+                                                                                    undefined &&
+                                                                                    (Object.keys(_vm.selectedMedias).length <
+                                                                                        _vm.maxMediaCount ||
+                                                                                        _vm.maxMediaCount == -1)
+                                                                                        ? _c(
                                                                                         "a",
                                                                                         {
-                                                                                            staticClass: "btn btn-sm btn-light",
-                                                                                            attrs: { href: "javascript:void(0)" },
+                                                                                            staticClass:
+                                                                                                "btn btn-sm btn-light",
+                                                                                            attrs: {
+                                                                                                href: "javascript:void(0)"
+                                                                                            },
                                                                                             on: {
                                                                                                 click: function($event) {
                                                                                                     return _vm.selectMedia(media)
@@ -27124,12 +27135,38 @@
                                                                                         [
                                                                                             _c("i", {
                                                                                                 staticClass:
-                                                                                                    "fa fa-times text-warning mr-1"
+                                                                                                    "fa fa-check text-success mr-1"
                                                                                             })
                                                                                         ]
-                                                                                    )
-                                                                                    : _vm._e(),
-                                                                                _vm._v(" "),
+                                                                                        )
+                                                                                        : _vm.selectedMedias[media.id] !=
+                                                                                        undefined
+                                                                                        ? _c(
+                                                                                            "a",
+                                                                                            {
+                                                                                                staticClass:
+                                                                                                    "btn btn-sm btn-light",
+                                                                                                attrs: {
+                                                                                                    href: "javascript:void(0)"
+                                                                                                },
+                                                                                                on: {
+                                                                                                    click: function($event) {
+                                                                                                        return _vm.selectMedia(media)
+                                                                                                    }
+                                                                                                }
+                                                                                            },
+                                                                                            [
+                                                                                                _c("i", {
+                                                                                                    staticClass:
+                                                                                                        "fa fa-times text-warning mr-1"
+                                                                                                })
+                                                                                            ]
+                                                                                        )
+                                                                                        : _vm._e()
+                                                                                ])
+                                                                                : _vm._e(),
+                                                                            _vm._v(" "),
+                                                                            _c("div", { staticClass: "btn-group" }, [
                                                                                 media.is_trashed
                                                                                     ? _c(
                                                                                     "a",
@@ -27184,8 +27221,7 @@
                         ])
                     ]),
                     _vm._v(" "),
-                    Object.keys(_vm.selectedMedias).length > 0
-                        ? _c(
+                    _c(
                         "footer",
                         {
                             staticClass: "bg-white",
@@ -27199,7 +27235,8 @@
                                         "div",
                                         { staticClass: "col-md-10" },
                                         [
-                                            _c(
+                                            Object.keys(_vm.selectedMedias).length > 0
+                                                ? _c(
                                                 "splide",
                                                 { ref: "splide", attrs: { options: _vm.sliderSettings } },
                                                 _vm._l(_vm.selectedMedias, function(
@@ -27246,22 +27283,29 @@
                                                     ])
                                                 }),
                                                 1
-                                            )
+                                                )
+                                                : _vm._e()
                                         ],
                                         1
                                     ),
                                     _vm._v(" "),
                                     _c("div", { staticClass: "col-md-2 m-auto text-center" }, [
-                                        _c("button", { staticClass: "btn btn-primary" }, [
-                                            _c("i", { staticClass: "fa fa-plus" }),
-                                            _vm._v(" " + _vm._s(_vm.trans.add_files))
-                                        ])
+                                        _c(
+                                            "button",
+                                            {
+                                                staticClass: "btn btn-primary",
+                                                on: { click: _vm.closeFileManager }
+                                            },
+                                            [
+                                                _c("i", { staticClass: "fa fa-plus" }),
+                                                _vm._v(" " + _vm._s(_vm.trans.add_files))
+                                            ]
+                                        )
                                     ])
                                 ])
                             ])
                         ]
-                        )
-                        : _vm._e()
+                    )
                 ])
             }
             var staticRenderFns = []

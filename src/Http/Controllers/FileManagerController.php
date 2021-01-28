@@ -11,20 +11,34 @@ use Illuminate\Support\Facades\Storage;
 
 class FileManagerController extends BaseController
 {
-    public function index(string $type = null)
+    public function index(string $type = null, Request $request)
     {
-        if(is_null($type)) {
+        if (is_null($type)) {
             $type = 'all';
         }
 
+        $maxMediaCount = $request->get('maxMediaCount') ?: '0';
+        $selectableType = $request->get('selectableType') ?: 'image';
+
+        $selectedMediaIds = $request->get('selectedMediaIds');
+        if ($selectedMediaIds) {
+            $selectedMediaIds = explode(',', rtrim($selectedMediaIds));
+        } else {
+            $selectedMediaIds = [];
+        }
+
+
         $trans = $this->getTransForIndex();
 
-        return view('FileManagerView::pages.filemanager.index', compact('type', 'trans'));
+        return view('FileManagerView::pages.filemanager.index', compact('type', 'maxMediaCount', 'selectableType', 'selectedMediaIds', 'trans'));
     }
 
-    public function upload()
+    public function upload(Request $request)
     {
-        return view('FileManagerView::pages.filemanager.upload');
+        $maxMediaCount = $request->get('maxMediaCount') ?: '0';
+        $selectableType = $request->get('selectableType') ?: 'image';
+
+        return view('FileManagerView::pages.filemanager.upload', compact('maxMediaCount', 'selectableType'));
     }
 
     public function uploadFromComputer(Request $request)
@@ -32,14 +46,14 @@ class FileManagerController extends BaseController
         $mediaUpload = new MediaUpload();
         $uploadedFile = $mediaUpload->fromComputer($request);
 
-        return response()->json(['message' =>  __('FileManagerLang.upload.success_msg', ['filename' => $uploadedFile->file_name])]);
+        return response()->json(['message' => __('FileManagerLang.upload.success_msg', ['filename' => $uploadedFile->file_name])]);
     }
 
     public function uploadFromUrl(Request $request)
     {
         $url = $request->get('url');
 
-        if(is_null($url)) {
+        if (is_null($url)) {
             throw new \Exception(__('FileManagerLang::upload.errors.invalid_url'));
         }
 
