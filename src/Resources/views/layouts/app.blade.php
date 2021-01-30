@@ -10,8 +10,8 @@
     <link rel="shortcut icon" href="assets/media/favicons/favicon.png">
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
-    <link rel="stylesheet" href="{{ fileManagerAsset('css/dashmix.min.css') }}">
-    <link rel="stylesheet" href="{{ fileManagerAsset('css/xpro.min.css') }}">
+    <link rel="stylesheet" href="{{ dawnstarAsset('css/dashmix.min.css') }}">
+    <link rel="stylesheet" href="{{ dawnstarAsset('css/xpro.min.css') }}">
     @stack('styles')
 </head>
 <body>
@@ -20,8 +20,8 @@
 
     @yield('content')
 
-    <script src="{{ fileManagerAsset('js/dashmix.core.min.js') }}"></script>
-    <script src="{{ fileManagerAsset('js/dashmix.app.min.js') }}"></script>
+    <script src="{{ dawnstarAsset('js/dashmix.core.min.js') }}"></script>
+    <script src="{{ dawnstarAsset('js/dashmix.app.min.js') }}"></script>
     @stack('scripts')
 </div>
 </body>
