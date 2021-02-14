@@ -18,7 +18,7 @@ class FileManagerController extends BaseController
         }
 
         $maxMediaCount = $request->get('maxMediaCount') ?: '0';
-        $selectableType = $request->get('selectableType') ?: 'image';
+        $selectableType = $request->get('selectableType');
 
         $selectedMediaIds = $request->get('selectedMediaIds');
         if ($selectedMediaIds) {
