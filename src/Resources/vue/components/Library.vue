@@ -95,7 +95,7 @@
         </main>
 
 
-        <footer id="page-footer" class="bg-white" style="height: 140px">
+        <footer id="page-footer" class="bg-white" style="height: 140px" v-if="selectableType">
             <div class="content py-0">
                 <div class="row">
                     <div class="col-md-10">

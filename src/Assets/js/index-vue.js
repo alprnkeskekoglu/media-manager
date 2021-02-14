@@ -27219,7 +27219,8 @@
                         ])
                     ]),
                     _vm._v(" "),
-                    _c(
+                    _vm.selectableType
+                        ? _c(
                         "footer",
                         {
                             staticClass: "bg-white",
@@ -27236,7 +27237,10 @@
                                             Object.keys(_vm.selectedMedias).length > 0
                                                 ? _c(
                                                 "splide",
-                                                { ref: "splide", attrs: { options: _vm.sliderSettings } },
+                                                {
+                                                    ref: "splide",
+                                                    attrs: { options: _vm.sliderSettings }
+                                                },
                                                 _vm._l(_vm.selectedMedias, function(
                                                     selectedMedia,
                                                     index
@@ -27267,7 +27271,9 @@
                                                                 _c("div", {
                                                                     staticStyle: { height: "80px" },
                                                                     domProps: {
-                                                                        innerHTML: _vm._s(selectedMedia.selected_html)
+                                                                        innerHTML: _vm._s(
+                                                                            selectedMedia.selected_html
+                                                                        )
                                                                     }
                                                                 }),
                                                                 _vm._v(" "),
@@ -27303,7 +27309,8 @@
                                 ])
                             ])
                         ]
-                    )
+                        )
+                        : _vm._e()
                 ])
             }
             var staticRenderFns = []
