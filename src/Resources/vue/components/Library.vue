@@ -193,8 +193,6 @@ export default {
             });
         },
         selectMedia(media) {
-
-            console.log(this.selectedMedias);
             if(this.selectedMedias[media.id] === undefined) {
                 this.$set(this.selectedMedias, media.id, media)
             } else {

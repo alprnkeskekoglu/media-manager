@@ -39504,6 +39504,8 @@
 
             window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
             Vue.component('filemanager-library', __webpack_require__(/*! ./components/Library.vue */ "./resources/js/components/Library.vue")["default"]);
+            Vue.config.productionTip = false;
+            Vue.config.devtools = false;
             var app = new Vue({
                 el: '#fileManager'
             });
@@ -39618,8 +39620,8 @@
         /*! no static exports found */
         /***/ (function(module, exports, __webpack_require__) {
 
-            __webpack_require__(/*! /home/valtheim/projects/app.example/resources/js/app.js */"./resources/js/app.js");
-            module.exports = __webpack_require__(/*! /home/valtheim/projects/app.example/resources/css/app.css */"./resources/css/app.css");
+            __webpack_require__(/*! /home/valtheim/projects/alperen.example/resources/js/app.js */"./resources/js/app.js");
+            module.exports = __webpack_require__(/*! /home/valtheim/projects/alperen.example/resources/css/app.css */"./resources/css/app.css");
 
 
             /***/ })

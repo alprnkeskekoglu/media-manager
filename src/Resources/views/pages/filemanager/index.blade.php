@@ -22,5 +22,5 @@
         window.trans = @json($trans)
     </script>
 
-    <script src="{{ fileManagerAsset('js/index-vue.js') }}"></script>
+    <script src="{{ fileManagerAsset('js/index-vue.js?v=1') }}"></script>
 @endpush
