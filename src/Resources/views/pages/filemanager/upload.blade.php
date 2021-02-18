@@ -74,7 +74,7 @@
         });
 
         myDropzone.on('success', function (response) {
-            window.location.href = '{{ route('dawnstar.filemanager.index') }}';
+            window.location.href = '{!! route('dawnstar.filemanager.index', $requestParams) !!}';
         });
 
         $('#uploadFromUrl').click(function () {

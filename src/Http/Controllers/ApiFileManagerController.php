@@ -122,8 +122,6 @@ class ApiFileManagerController extends BaseController
 
         $media->restore();
 
-        $folder_path = $media->uploaded_place . '/' . $media->path;
-
-        rename(storage_path('app/public/media_trash/' . $media->uploaded_place . '/' . $media->path . '/' . $media->fullname), public_path('uploads/' . $media->uploaded_place . '/' . $media->path . '/' . $media->fullname));
+        rename(storage_path('app/public/media_trash/' . $media->uploaded_place . $media->path . '/' . $media->fullname), public_path('uploads/' . $media->uploaded_place . '/' . $media->path . '/' . $media->fullname));
     }
 }

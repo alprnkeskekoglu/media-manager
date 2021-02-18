@@ -17,28 +17,16 @@ class FileManagerController extends BaseController
             $type = 'all';
         }
 
-        $maxMediaCount = $request->get('maxMediaCount') ?: '0';
-        $selectableType = $request->get('selectableType');
-
-        $selectedMediaIds = $request->get('selectedMediaIds');
-        if ($selectedMediaIds) {
-            $selectedMediaIds = explode(',', rtrim($selectedMediaIds));
-        } else {
-            $selectedMediaIds = [];
-        }
-
-
+        $requestParams = $this->getRequestParams($request);
         $trans = $this->getTransForIndex();
 
-        return view('FileManagerView::pages.filemanager.index', compact('type', 'maxMediaCount', 'selectableType', 'selectedMediaIds', 'trans'));
+        return view('FileManagerView::pages.filemanager.index', compact('type', 'requestParams', 'trans'));
     }
 
     public function upload(Request $request)
     {
-        $maxMediaCount = $request->get('maxMediaCount') ?: '0';
-        $selectableType = $request->get('selectableType') ?: 'image';
-
-        return view('FileManagerView::pages.filemanager.upload', compact('maxMediaCount', 'selectableType'));
+        $requestParams = $this->getRequestParams($request);
+        return view('FileManagerView::pages.filemanager.upload', compact('requestParams'));
     }
 
     public function uploadFromComputer(Request $request)
@@ -77,5 +65,14 @@ class FileManagerController extends BaseController
             'view' => __('FileManagerLang::index.view'),
             'add_files' => __('FileManagerLang::index.add_files'),
         ];
+    }
+
+    private function getRequestParams($request)
+    {
+        $maxMediaCount = $request->get('maxMediaCount') ?: '0';
+        $selectableType = $request->get('selectableType');
+        $selectedMediaIds = $request->get('selectedMediaIds') ?: '';
+
+        return ['selectableType' => $selectableType, 'maxMediaCount' => $maxMediaCount, 'selectedMediaIds' => $selectedMediaIds];
     }
 }

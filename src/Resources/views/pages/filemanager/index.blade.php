@@ -9,9 +9,9 @@
 @push('scripts')
     <script>
         window.type = '{{ $type }}'
-        window.maxMediaCount = '{{ $maxMediaCount }}'
-        window.selectableType = '{{ $selectableType }}'
-        window.selectedMediaIds = @json($selectedMediaIds)
+        window.maxMediaCount = '{{ $requestParams['maxMediaCount'] }}'
+        window.selectableType = '{{ $requestParams['selectableType'] }}'
+        window.selectedMediaIds = @json(explode(',', rtrim($requestParams['selectedMediaIds'])))
 
         window.getMediaRoute = '{{ route('dawnstar.filemanager.api.getMedias') }}'
         window.getSelectedMediaRoute = '{{ route('dawnstar.filemanager.api.getSelectedMedias') }}'
@@ -22,5 +22,5 @@
         window.trans = @json($trans)
     </script>
 
-    <script src="{{ fileManagerAsset('js/index-vue.js?v=1') }}"></script>
+    <script src="{{ asset('js/app.js?v=1') }}"></script>
 @endpush
