@@ -64,7 +64,7 @@ class ApiFileManagerController extends BaseController
 
     public function getSelectedMedias(Request $request)
     {
-        $ids = $request->get('selectedMediaIds') ?: [];
+        $ids = $request->get('selectedMediaIds') ? json_decode($request->get('selectedMediaIds'), 1): [];
 
         $medias = Media::whereIn('id', $ids)->get();
 

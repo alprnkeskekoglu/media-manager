@@ -69,10 +69,10 @@
                                                 </a>
                                             </div>
                                             <div class="btn-group" v-if="!media.is_trashed && media.type == selectableType">
-                                                <a class="btn btn-sm btn-light" href="javascript:void(0)" v-if="selectedMedias[media.id] == undefined && (Object.keys(selectedMedias).length < maxMediaCount || maxMediaCount == -1)" @click="selectMedia(media)">
+                                                <a class="btn btn-sm btn-light" href="javascript:void(0)" v-if="isMediaSelected(media) == -1 && (Object.keys(selectedMedias).length < maxMediaCount || maxMediaCount == -1)" @click="selectMedia(media)">
                                                     <i class="fa fa-check text-success mr-1"></i>
                                                 </a>
-                                                <a class="btn btn-sm btn-light" href="javascript:void(0)" v-else-if="selectedMedias[media.id] != undefined" @click="selectMedia(media)">
+                                                <a class="btn btn-sm btn-light" href="javascript:void(0)" v-else-if="isMediaSelected(media) != -1" @click="selectMedia(media)">
                                                     <i class="fa fa-times text-warning mr-1"></i>
                                                 </a>
                                             </div>
@@ -138,7 +138,7 @@ export default {
             search: '',
             medias: {},
             mediaFolders: {},
-            selectedMedias: {},
+            selectedMedias: [],
             type: window.type,
             trans: window.trans,
             maxMediaCount: window.maxMediaCount,
@@ -186,22 +186,34 @@ export default {
                     selectedMediaIds: window.selectedMediaIds,
                 }
             }).then(function (response) {
-                for (var id in response.data.selectedMedias) {
-                    var media = response.data.selectedMedias[id];
-                    self.$set(self.selectedMedias, media.id, media)
-                }
+                self.selectedMedias = response.data.selectedMedias;
             });
         },
         selectMedia(media) {
-            if(this.selectedMedias[media.id] === undefined) {
-                this.$set(this.selectedMedias, media.id, media)
+            let self = this;
+            var selectedMediaIndex = self.isMediaSelected(media);
+            if(selectedMediaIndex != -1) {
+                self.selectedMedias.splice(selectedMediaIndex, 1);
             } else {
-                this.$delete(this.selectedMedias, media.id)
+                self.selectedMedias.push(media);
             }
 
-            if(this.$refs.splide) {
-                this.$refs.splide.remount();
+            if(self.$refs.splide) {
+                self.$refs.splide.remount();
             }
+        },
+        isMediaSelected(media) {
+            let self = this;
+
+            var mediaExist = -1;
+            self.selectedMedias.forEach(function (selectedMedia, index) {
+                if(media.id == selectedMedia.id) {
+                    mediaExist = index;
+                    return;
+                }
+            });
+
+            return mediaExist;
         },
         deleteMedia(id) {
             let self = this;

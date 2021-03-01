@@ -8256,7 +8256,7 @@
                         search: '',
                         medias: {},
                         mediaFolders: {},
-                        selectedMedias: {},
+                        selectedMedias: [],
                         type: window.type,
                         trans: window.trans,
                         maxMediaCount: window.maxMediaCount,
@@ -8304,22 +8304,33 @@
                                 selectedMediaIds: window.selectedMediaIds
                             }
                         }).then(function (response) {
-                            for (var id in response.data.selectedMedias) {
-                                var media = response.data.selectedMedias[id];
-                                self.$set(self.selectedMedias, media.id, media);
-                            }
+                            self.selectedMedias = response.data.selectedMedias;
                         });
                     },
                     selectMedia: function selectMedia(media) {
-                        if (this.selectedMedias[media.id] === undefined) {
-                            this.$set(this.selectedMedias, media.id, media);
+                        var self = this;
+                        var selectedMediaIndex = self.isMediaSelected(media);
+
+                        if (selectedMediaIndex != -1) {
+                            self.selectedMedias.splice(selectedMediaIndex, 1);
                         } else {
-                            this.$delete(this.selectedMedias, media.id);
+                            self.selectedMedias.push(media);
                         }
 
-                        if (this.$refs.splide) {
-                            this.$refs.splide.remount();
+                        if (self.$refs.splide) {
+                            self.$refs.splide.remount();
                         }
+                    },
+                    isMediaSelected: function isMediaSelected(media) {
+                        var self = this;
+                        var mediaExist = -1;
+                        self.selectedMedias.forEach(function (selectedMedia, index) {
+                            if (media.id == selectedMedia.id) {
+                                mediaExist = index;
+                                return;
+                            }
+                        });
+                        return mediaExist;
                     },
                     deleteMedia: function deleteMedia(id) {
                         var self = this;
@@ -27111,8 +27122,7 @@
                                                                             !media.is_trashed &&
                                                                             media.type == _vm.selectableType
                                                                                 ? _c("div", { staticClass: "btn-group" }, [
-                                                                                    _vm.selectedMedias[media.id] ==
-                                                                                    undefined &&
+                                                                                    _vm.isMediaSelected(media) == -1 &&
                                                                                     (Object.keys(_vm.selectedMedias).length <
                                                                                         _vm.maxMediaCount ||
                                                                                         _vm.maxMediaCount == -1)
@@ -27137,8 +27147,7 @@
                                                                                             })
                                                                                         ]
                                                                                         )
-                                                                                        : _vm.selectedMedias[media.id] !=
-                                                                                        undefined
+                                                                                        : _vm.isMediaSelected(media) != -1
                                                                                         ? _c(
                                                                                             "a",
                                                                                             {

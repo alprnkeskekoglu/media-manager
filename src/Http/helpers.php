@@ -30,7 +30,7 @@ function getMediaArray($media)
 {
     $mimeClass = $media->mime_class;
     if($mimeClass == 'image') {
-        $html = '<img class="img-fluid rounded" style="max-height: 120px" src="' . $media->url . '">';
+        $html = '<img class="img-fluid rounded" style="max-height: 120px; height: 120px" src="' . $media->url . '">';
         $selectedHtml = '<img class="img-fluid rounded" style="max-height: 80px" src="' . $media->url . '">';
     } elseif ($mimeClass == 'video') {
         $html = '<i class="fa fa-fw fa-5x fa-file-video text-default"></i>';
