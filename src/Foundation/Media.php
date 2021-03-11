@@ -11,6 +11,7 @@ class Media
     public bool $isDeleted;
     public string $fullname;
     public string $file_name;
+    public string $extension;
     public string $basePath;
     public string $path;
     public string $url;
@@ -122,6 +123,10 @@ class Media
             return false;
         }
 
+        if (!in_array($this->extension, ['jpg', 'png', 'jpeg'])) {
+            return false;
+        }
+
         return config('dawnstar.webp_status', true) && $this->isDeleted == false && $this->model->mime_class == 'image' && session('dawnstar.isPanel') == false;
     }
 
@@ -154,6 +159,7 @@ class Media
     {
         $this->fullname = $this->model->fullname;
         $this->filename = $this->model->file_name;
+        $this->extension = $this->model->extension;
 
 
         $this->path = public_path($this->basePath);
