@@ -10,7 +10,7 @@ class Media
     public int $id;
     public bool $isDeleted;
     public string $fullname;
-    public string $file_name;
+    public string $filename;
     public string $extension;
     public string $basePath;
     public string $path;
@@ -117,13 +117,16 @@ class Media
     private function getWebpStatus()
     {
         $browser = $this->getBrowser();
-        $agent = $_SERVER['HTTP_USER_AGENT'] ?? "";
 
         if ($browser == 'Safari') {
             return false;
         }
 
         if (!in_array($this->extension, ['jpg', 'png', 'jpeg'])) {
+            return false;
+        }
+
+        if(strpos(request()->getPathInfo(), '/api/v') > -1) {
             return false;
         }
 
@@ -136,7 +139,6 @@ class Media
 
         $agent = $_SERVER['HTTP_USER_AGENT'] ?? "";
 
-        $userBrowser = '';
         foreach ($browserArray as $browser) {
             if (strpos($agent, $browser) !== false) {
                 return $browser;
