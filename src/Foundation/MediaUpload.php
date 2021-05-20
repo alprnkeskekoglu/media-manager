@@ -58,7 +58,8 @@ class MediaUpload
             throw new FileNotFoundException(__('FileManagerLang::upload.errors.no_file'));
         }
 
-        foreach ($files as $file) {
+        $medias = [];
+        foreach ($files as $key => $file) {
             $mimeType = $file->getClientMimeType();
 
             if(! in_array($mimeType, $this->mimeTypes)) {
@@ -68,9 +69,10 @@ class MediaUpload
             $tempFilePath = Storage::disk('local')->put('/media_temp', $file);
             $tempFile = storage_path('app/' . $tempFilePath);
 
-            return $this->saveFile($file, $tempFile);
+            $medias[$key] = $this->saveFile($file, $tempFile);
         }
 
+        return $medias;
     }
 
     public function fromUrl(string $url)
