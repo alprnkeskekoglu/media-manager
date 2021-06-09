@@ -13,6 +13,10 @@ class FileManagerController extends BaseController
 {
     public function index(string $type = null, Request $request)
     {
+        if(!$request->get('selectableType')) {
+            canUser("file_manager.index", false);
+        }
+
         if (is_null($type)) {
             $type = 'all';
         }
