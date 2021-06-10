@@ -36,9 +36,12 @@ class FileManagerController extends BaseController
     public function uploadFromComputer(Request $request)
     {
         $mediaUpload = new MediaUpload();
-        $uploadedFile = $mediaUpload->fromComputer($request);
 
-        return response()->json(['message' => __('FileManagerLang.upload.success_msg', ['filename' => $uploadedFile->file_name])]);
+        foreach ($request->file('files') as $file) {
+            $mediaUpload->fromComputer($file);
+        }
+
+        return response()->json(['message' => __('FileManagerLang.upload.success_msg')]);
     }
 
     public function uploadFromUrl(Request $request)
@@ -66,7 +69,6 @@ class FileManagerController extends BaseController
             'size_b_s' => __('FileManagerLang::index.size.big_small'),
             'size_s_b' => __('FileManagerLang::index.size.small_big'),
             'search' => __('FileManagerLang::index.search'),
-            'view' => __('FileManagerLang::index.view'),
             'add_files' => __('FileManagerLang::index.add_files'),
         ];
     }

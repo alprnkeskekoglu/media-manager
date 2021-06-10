@@ -14,7 +14,7 @@ return [
     'upload' => 'Yükle',
 
 
-    'success_msg' => ':filename isimli dosya başarıyla yüklendi!',
+    'success_msg' => 'Yükleme başarıyla gerçekleştirildi!',
 
     'errors' => [
         'no_file' => 'Herhangi bir dosya gönderilmedi.',

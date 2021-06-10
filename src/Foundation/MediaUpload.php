@@ -47,32 +47,18 @@ class MediaUpload
         $this->folder = '/' . date('Y') . '/' . date('m');
     }
 
-    public function fromComputer(Request $request)
+    public function fromComputer(UploadedFile $media)
     {
-        $files = $request->file('files');
-        if(!is_array($files)) {
-            $files = [$files];
+        $mimeType = $media->getClientMimeType();
+
+        if(! in_array($mimeType, $this->mimeTypes)) {
+            throw new InvalidFileException(__('FileManagerLang::upload.errors.mime_type'));
         }
 
-        if(count($files) == 0) {
-            throw new FileNotFoundException(__('FileManagerLang::upload.errors.no_file'));
-        }
+        $tempFilePath = Storage::disk('local')->put('/media_temp', $media);
+        $tempFile = storage_path('app/' . $tempFilePath);
 
-        $medias = [];
-        foreach ($files as $key => $file) {
-            $mimeType = $file->getClientMimeType();
-
-            if(! in_array($mimeType, $this->mimeTypes)) {
-                throw new InvalidFileException(__('FileManagerLang::upload.errors.mime_type'));
-            }
-
-            $tempFilePath = Storage::disk('local')->put('/media_temp', $file);
-            $tempFile = storage_path('app/' . $tempFilePath);
-
-            $medias[$key] = $this->saveFile($file, $tempFile);
-        }
-
-        return $medias;
+        return $this->saveFile($media, $tempFile);
     }
 
     public function fromUrl(string $url)
