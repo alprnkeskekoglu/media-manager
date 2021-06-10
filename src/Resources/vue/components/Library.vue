@@ -62,12 +62,7 @@
                                     </div>
 
                                     <div class="options-overlay bg-black-75">
-                                        <div class="options-overlay-content">
-                                            <div class="mb-3">
-                                                <a class="btn btn-hero-light" href="javascript:void(0)">
-                                                    <i class="fa fa-eye text-primary mr-1"></i> {{ trans.view }}
-                                                </a>
-                                            </div>
+                                        <div class="options-overlay-content">   
                                             <div class="btn-group" v-if="!media.is_trashed && media.type == selectableType">
                                                 <a class="btn btn-sm btn-light" href="javascript:void(0)" v-if="isMediaSelected(media) == -1 && (Object.keys(selectedMedias).length < maxMediaCount || maxMediaCount == -1)" @click="selectMedia(media)">
                                                     <i class="fa fa-check text-success mr-1"></i>
