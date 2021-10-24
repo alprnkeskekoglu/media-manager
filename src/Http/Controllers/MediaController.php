@@ -154,8 +154,8 @@ class MediaController extends Controller
         $free = disk_free_space('/');
         $filled = $total - $free;
         $rate = floor($filled * 100 / $total);
-        $total = unitSizeForHuman($total, 'string');
-        $filled = unitSizeForHuman($filled, 'string');
+        $total = unitSizeForHuman($total);
+        $filled = unitSizeForHuman($filled);
 
         $text = "$filled ($rate%) of $total used";
 
