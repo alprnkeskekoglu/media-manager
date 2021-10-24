@@ -1,30 +1,31 @@
 <?php
 
-namespace Dawnstar\FileManager\Models;
+namespace Dawnstar\MediaManager\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Storage;
 
 class Media extends Model
 {
     use SoftDeletes;
 
     protected $table = 'medias';
-    protected $dates = ['created_at', 'updated_at', 'deleted_at'];
     protected $guarded = ['id'];
+    protected $appends = ['url', 'path'];
+
+    public function folder()
+    {
+        return $this->belongsTo(Folder::class);
+    }
+
+    public function getPathAttribute()
+    {
+        return 'medias/' . ($this->folder ? ($this->folder->name . '/') : '') . $this->full_name;
+    }
 
     public function getUrlAttribute()
     {
-        if($this->trashed()) {
-            if(file_exists(storage_path('app/public/media_trash/' . $this->uploaded_place . $this->path . '/' . $this->fullname))) {
-                return url('/storage/media_trash/' . $this->uploaded_place . $this->path . '/' . $this->fullname);
-            }
-        }
-
-        if(file_exists(public_path('/uploads/' . $this->uploaded_place . $this->path . '/' . $this->fullname))) {
-            return url('/uploads/' . $this->uploaded_place . $this->path . '/' . $this->fullname);
-        }
-
-        return defaultImage();
+        return route('media', $this->uid);
     }
 }

@@ -1,0 +1,21 @@
+.list-group-item.active {
+    background-color: #7489ea !important;
+}
+
+.selectedMedias:before {
+    display: block;
+    background-color: #fafbfe;
+    height: 5px;
+    margin-right: -25px;
+    margin-left: -27px;
+    margin-bottom: 10px;
+    content: '';
+}
+
+body.dark .selectedMedias:before {
+    background-color: #343a40 !important;
+}
+
+.sr-only {
+    display: none;
+}

@@ -1,58 +1,34 @@
 <?php
 
-namespace Dawnstar\FileManager\Providers;
+namespace Dawnstar\MediaManager\Providers;
 
-use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Route;
 
 class RouteServiceProvider extends ServiceProvider
 {
-    /**
-     * This namespace is applied to your controller routes.
-     *
-     * In addition, it is set as the URL generator's root namespace.
-     *
-     * @var string
-     */
-    protected $namespace = 'Dawnstar\FileManager\Http\Controllers';
-
-    /**
-     * Define your route model bindings, pattern filters, etc.
-     *
-     * @return void
-     */
     public function boot()
     {
         parent::boot();
     }
 
-    /**
-     * Define the routes for the application.
-     *
-     * @return void
-     */
     public function map()
     {
         $this->mapPanelRoutes();
+        $this->mapWebRoutes();
     }
 
-    /**
-     * Define the "web" routes for the application.
-     *
-     * These routes all receive session state, CSRF protection, etc.
-     *
-     * @return void
-     */
     protected function mapPanelRoutes()
     {
-        Route::group([
-            'middleware' => 'web',
-            'namespace' => $this->namespace,
-            'prefix' => 'dawnstar/filemanager',
-            'as' => 'dawnstar.filemanager.'
-        ], function ($router) {
-            require __DIR__.'/../Routes/panel.php';
+        Route::group(['middleware' => 'web', 'prefix' => 'dawnstar/media-manager', 'as' => 'media_manager.'], function ($router) {
+            require __DIR__ . '/../Routes/panel.php';
         });
+    }
 
+    protected function mapWebRoutes()
+    {
+        Route::group(['middleware' => 'web'], function ($router) {
+            require __DIR__ . '/../Routes/web.php';
+        });
     }
 }

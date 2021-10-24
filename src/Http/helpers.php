@@ -1,72 +1,11 @@
 <?php
 
-
-function fileManagerAsset($path)
+function defaultImage()
 {
-    return asset('vendor/filemanager/assets/' . $path);
-}
-
-function defaultImage() {
     return 'https://via.placeholder.com/150';
 }
 
-function media(int $id, int $width = null, int $height = null) {
-    $mediaFoundation = new \Dawnstar\FileManager\Foundation\Media();
-    $media = $mediaFoundation
-        ->setId($id);
-
-    if($width) {
-        $media = $media->setResizeWidth($width);
-    }
-
-    if($height) {
-        $media = $media->setResizeHeight($height);
-    }
-
-    return $media->getMedia();
-}
-
-function getMediaArray($media)
-{
-    $mimeClass = $media->mime_class;
-    if($mimeClass == 'image') {
-        $html = '<img class="img-fluid rounded" style="max-height: 120px; height: 120px" src="' . $media->url . '">';
-        $selectedHtml = '<img class="img-fluid rounded" style="max-height: 80px" src="' . $media->url . '">';
-    } elseif ($mimeClass == 'video') {
-        $html = '<i class="fa fa-fw fa-5x fa-file-video text-default"></i>';
-        $selectedHtml = '<i class="fa fa-fw fa-4x fa-file-video text-default"></i>';
-    } elseif($mimeClass == 'audio') {
-        $html = '<i class="fa fa-fw fa-5x fa-file-audio text-primary"></i>';
-        $selectedHtml = '<i class="fa fa-fw fa-4x fa-file-audio text-primary"></i>';
-    } elseif($mimeClass == 'text') {
-        $html = '<i class="fa fa-fw fa-5x fa-file-alt text-black"></i>';
-        $selectedHtml = '<i class="fa fa-fw fa-4x fa-file-alt text-black"></i>';
-    } elseif($mimeClass == 'application') {
-        if(in_array($media->extension, ['csv', 'xlsx', 'xls'])) {
-            $html = '<i class="fa fa-fw fa-5x fa-file-excel text-success"></i>';
-            $selectedHtml = '<i class="fa fa-fw fa-4x fa-file-excel text-success"></i>';
-        } elseif($media->mime_type == 'application/pdf') {
-            $html = '<i class="fa fa-fw fa-5x fa-file-pdf text-danger"></i>';
-            $selectedHtml = '<i class="fa fa-fw fa-4x fa-file-pdf text-danger"></i>';
-        }
-    } else {
-        $html = '<i class="fa fa-fw fa-5x fa-file text-gray-dark"></i>';
-        $selectedHtml = '<i class="fa fa-fw fa-4x fa-file text-gray-dark"></i>';
-    }
-
-    return [
-        'id' => $media->id,
-        'fullname' => $media->fullname,
-        'html' => $html,
-        'selected_html' => $selectedHtml,
-        'size' => unitSizeForHuman($media->size),
-        'is_trashed' => $media->trashed(),
-        'url' => $media->url,
-        'type' => (in_array($media->mime_class, ['image', 'video', 'audio']) ? $media->mime_class : 'file')
-    ];
-}
-
-function unitSizeForHuman(int $bytes): string
+function unitSizeForHuman(int $bytes, string $returnType = 'array')
 {
     $returnByte = $bytes;
     if ($bytes >= 1073741824) {
@@ -80,10 +19,43 @@ function unitSizeForHuman(int $bytes): string
         $unit = 'KB';
     } elseif ($bytes >= 0) {
         $returnByte = $bytes;
-        $unit = 'B';
+        $unit = 'byte';
     } else {
         trigger_error('Bytes must be bigger then 0.', E_USER_ERROR);
     }
 
-    return $returnByte . ' ' . $unit;
+    if ($returnType === 'string') {
+        return $returnByte . ' ' . $unit;
+    }
+    return [$returnByte, $unit];
+}
+
+function getMediaImage($media): string
+{
+    $return = asset('assets/medias/default.png');
+    if ($media->mime_class == 'image') {
+        $return = getImageUrl($media);
+    } elseif (in_array($media->mime_class, ['audio', 'video', 'text'])) {
+        $return = asset('assets/medias/' . $media->mime_class . '.png');
+    } elseif ($media->mime_class == 'application') {
+        if ($media->mime_type == 'application/pdf') {
+            $return = asset('assets/medias/pdf.png');
+        } elseif (in_array($media->extension, ['csv', 'xlsx', 'xls'])) {
+            $return = asset('assets/medias/xls.png');
+        } elseif (in_array($media->extension, ['doc', 'docx', 'ods'])) {
+            $return = asset('assets/medias/doc.png');
+        } elseif (in_array($media->extension, ['ppt', 'pptx'])) {
+            $return = asset('assets/medias/ppt.png');
+        }
+    }
+    return $return;
+}
+
+function getImageUrl($media)
+{
+    if ($media->deleted_at) {
+        $disk = ($media->private ? 'private' : 'public') . '_trash';
+        return 'data:' . $media->mime_type . ';base64, ' . base64_encode(Storage::disk($disk)->get($media->full_name));
+    }
+    return $media->url;
 }

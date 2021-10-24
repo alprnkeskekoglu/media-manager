@@ -1,15 +1,11 @@
 {
-    "name": "dawnstar/filemanager",
-    "description": "Package for Filemanager",
+    "name": "dawnstar/media-manager",
+    "description": "Package for Media Manager",
     "license": "MIT",
     "minimum-stability": "stable",
-    "prefer-stable": true,
-    "require": {
-        "dawnstar/dawnstar": "*"
-    },
     "autoload": {
         "psr-4": {
-            "Dawnstar\\FileManager\\": "src"
+            "Dawnstar\\MediaManager\\": "src"
         },
         "files": [
             "src\\Http\\helpers.php"
@@ -24,7 +20,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Dawnstar\\FileManager\\FileManagerServiceProvider"
+              "Dawnstar\\MediaManager\\MediaManagerServiceProvider"
             ]
         }
     }
