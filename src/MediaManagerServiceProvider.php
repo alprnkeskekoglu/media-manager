@@ -1,6 +1,6 @@
 <?php
 
-namespace Dawnstar\FileManager;
+namespace Dawnstar\MediaManager;
 
 use Dawnstar\MediaManager\Providers\RouteServiceProvider;
 use Illuminate\Support\ServiceProvider;
