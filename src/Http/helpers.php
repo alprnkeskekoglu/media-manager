@@ -5,7 +5,7 @@ function defaultImage()
     return 'https://via.placeholder.com/150';
 }
 
-function unitSizeForHuman(int $bytes, string $returnType = 'array'): array|string
+function unitSizeForHuman(int $bytes, string $returnType = 'array')
 {
     $returnByte = $bytes;
     if ($bytes >= 1073741824) {
