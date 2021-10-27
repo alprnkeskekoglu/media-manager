@@ -5,21 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Media Manager</title>
     <link rel="shortcut icon" href="assets/images/favicon.ico">
-
     <link rel="stylesheet" href="{{ asset('vendor/dawnstar/assets/css/icons.min.css') }}">
     <link rel="stylesheet" href="{{ asset('vendor/dawnstar/assets/css/app-modern.min.css') }}" id="light-style">
     <link rel="stylesheet" href="{{ asset('vendor/dawnstar/assets/css/app-modern-dark.min.css') }}" id="dark-style">
     <link rel="stylesheet" href="{{ asset('vendor/media-manager/assets/css/toastr.min.css') }}">
     <link rel="stylesheet" href="{{ asset('vendor/media-manager/assets/css/media-manager.css') }}">
-    <style>
-        [class="carousel-3d-slide"] {
-            opacity: 1!important;
-            visibility: initial!important;
-        }
-        .carousel-3d-slide {
-            background-color: unset !important;
-        }
-    </style>
 </head>
 
 <body class="loading" data-layout="detached">

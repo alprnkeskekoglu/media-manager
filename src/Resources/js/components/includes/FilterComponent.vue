@@ -1,32 +1,32 @@
 <template>
-    <div class="row">
+    <div class="row" v-if="Object.keys($root.trans).length">
         <div class="col-lg-3 col-md-6 mb-md-2">
             <select class="form-select" v-model="$root.filter.folder" v-if="$root.data_type === 'media' && !$root.is_trashed">
-                <option value="">Directories</option>
+                <option value="">{{ $root.trans.folder.title }}</option>
                 <option v-for="folder in $root.folders" :value="folder.id">{{ folder.name }}</option>
             </select>
         </div>
         <div class="col-lg-3 col-md-6 mb-md-2">
             <select class="form-select" v-model="$root.filter.type" v-if="$root.data_type === 'media'">
-                <option value="">Select</option>
-                <option value="file">File</option>
-                <option value="image">Image</option>
-                <option value="audio">Audio</option>
-                <option value="video">Video</option>
+                <option value="">{{ $root.trans.type.all }}</option>
+                <option value="file">{{ $root.trans.type.file }}</option>
+                <option value="image">{{ $root.trans.type.image }}</option>
+                <option value="audio">{{ $root.trans.type.audio }}</option>
+                <option value="video">{{ $root.trans.type.video }}</option>
             </select>
         </div>
         <div class="col-lg-3 col-md-6">
             <select class="form-select" v-model="$root.filter.order" v-if="$root.data_type === 'media'">
-                <option value="uploaded_asc">Uploaded Time: Old to New</option>
-                <option value="uploaded_desc">Uploaded Time: New to Old</option>
-                <option value="name_asc">Name: Z to A</option>
-                <option value="name_desc">Name: A to Z</option>
-                <option value="size_asc">Size: Low to High</option>
-                <option value="size_desc">Size: High to Low</option>
+                <option value="uploaded_asc">{{ $root.trans.order.uploaded_asc }}</option>
+                <option value="uploaded_desc">{{ $root.trans.order.uploaded_desc }}</option>
+                <option value="name_asc">{{ $root.trans.order.name_asc }}</option>
+                <option value="name_desc">{{ $root.trans.order.name_desc }}</option>
+                <option value="size_asc">{{ $root.trans.order.size_asc }}</option>
+                <option value="size_desc">{{ $root.trans.order.size_desc }}</option>
             </select>
         </div>
         <div class="col-lg-3 col-md-6">
-            <input type="text" class="form-control" placeholder="Search files..." v-model="$root.filter.search">
+            <input type="text" class="form-control" :placeholder="$root.trans.search" v-model="$root.filter.search">
         </div>
     </div>
 </template>
@@ -36,7 +36,3 @@ export default {
     name: "FilterComponent"
 }
 </script>
-
-<style scoped>
-
-</style>

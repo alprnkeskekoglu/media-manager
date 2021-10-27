@@ -18,7 +18,7 @@
                 </carousel-3d>
             </div>
             <div class="col-2 d-flex justify-content-center align-items-center">
-                <button class="btn btn-primary">Gönder</button>
+                <button class="btn btn-primary">{{ $root.trans.send }}</button>
             </div>
         </div>
     </div>

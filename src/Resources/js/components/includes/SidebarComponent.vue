@@ -1,43 +1,53 @@
 <template>
-    <div class="page-aside-left">
+    <div class="page-aside-left" v-if="Object.keys($root.trans).length">
         <div class="mb-2">
             <img src="https://via.placeholder.com/210x100" alt="image" class="img-fluid rounded" width="210"/>
         </div>
         <div class="btn-group d-block mb-2">
-            <button type="button" class="btn btn-success dropdown-toggle w-100" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="mdi mdi-plus"></i> Create New</button>
+            <button type="button" class="btn btn-success dropdown-toggle w-100" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="mdi mdi-plus"></i>
+                {{ $root.trans.create.title }}
+            </button>
             <div class="dropdown-menu">
-                <a href="javascript:void(0);" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#newFolderModal"><i class="mdi mdi-folder-plus-outline me-1"></i> Folder</a>
-                <a href="javascript:void(0);" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#newMediaModal"><i class="mdi mdi-file-plus-outline me-1"></i> Media</a>
+                <a href="javascript:void(0);" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#newFolderModal">
+                    <i class="mdi mdi-folder-plus-outline me-1"></i>
+                    {{ $root.trans.create.folder }}
+                </a>
+                <a href="javascript:void(0);" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#newMediaModal">
+                    <i class="mdi mdi-file-plus-outline me-1"></i>
+                    {{ $root.trans.create.media }}
+                </a>
             </div>
         </div>
         <div class="email-menu-list mt-3">
             <a href="javascript:void(0)" :class="'list-group-item border-0 rounded-1' + ($root.data_type == 'media' && !$root.is_trashed ? ' active' : '')"
                @click="changePage('media', false)">
                 <i class="mdi mdi-folder-image font-18 align-middle me-2"></i>
-                Medias
+                {{ $root.trans.media.title }}
             </a>
             <a href="javascript:void(0)" :class="'list-group-item border-0 rounded-1' + ($root.data_type == 'media' && $root.is_trashed ? ' active' : '')"
                @click="changePage('media', true)">
                 <i class="mdi mdi-delete font-18 align-middle me-2"></i>
-                Deleted Medias
+                {{ $root.trans.media.deleted_title }}
             </a>
             <hr>
             <a href="javascript:void(0)" :class="'list-group-item border-0 rounded-1' + ($root.data_type == 'folder' && !$root.is_trashed ? ' active' : '')"
                @click="changePage('folder', false)">
                 <i class="mdi mdi-folder font-18 align-middle me-2"></i>
-                Folders
+                {{ $root.trans.folder.title }}
             </a>
             <a href="javascript:void(0)" :class="'list-group-item border-0 rounded-1' + ($root.data_type == 'folder' && $root.is_trashed ? ' active' : '')"
                @click="changePage('folder', true)">
                 <i class="mdi mdi-delete font-18 align-middle me-2"></i>
-                Deleted Folders
+                {{ $root.trans.folder.deleted_title }}
             </a>
         </div>
 
         <div class="mt-lg-4">
-            <h6 class="text-uppercase mt-3">Storage</h6>
+            <h6 class="text-uppercase mt-3">{{ $root.trans.storage }}</h6>
             <div class="progress my-2 progress-sm">
-                <div :class="'progress-bar progress-lg ' + (rate > 80 ? 'bg-danger' : 'bg-success')" role="progressbar" :style="'width: '+rate+'%'" :aria-valuenow="rate" aria-valuemin="0" aria-valuemax="100"></div>
+                <div :class="'progress-bar progress-lg ' + (rate > 80 ? 'bg-danger' : 'bg-success')" role="progressbar"
+                     :style="'width: '+rate+'%'" :aria-valuenow="rate" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
             <p class="text-muted font-12 mb-0">{{ storage_text }}</p>
         </div>
@@ -65,6 +75,7 @@ export default {
         }
     },
     mounted() {
+        console.log('sidebar')
         this.getStorageStatus();
     },
     methods: {

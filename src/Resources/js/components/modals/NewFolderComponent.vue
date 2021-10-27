@@ -3,17 +3,17 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="newFolderModalLabel">New Folder</h4>
+                    <h4 class="modal-title" id="newFolderModalLabel">{{ $root.trans.folder.create_title }}</h4>
                     <button type="button" class="btn-close" id="newFolderModalClose" data-bs-dismiss="modal" aria-hidden="true"></button>
                 </div>
                 <div class="modal-body">
                     <div class="row mb-3">
                         <div class="col-9">
-                            <input type="text" id="folder" v-model="name" :class="'form-control' + (error ? ' is-invalid' : '')" :placeholder="$root.trans.folder">
+                            <input type="text" id="folder" v-model="name" :class="'form-control' + (error ? ' is-invalid' : '')" :placeholder="$root.trans.folder.name">
                             <div class="invalid-feedback d-block" v-if="error">{{ error }}</div>
                         </div>
                         <div class="col-3 text-ent">
-                            <button class="btn btn-primary" @click="createNewFolder">Kaydet</button>
+                            <button class="btn btn-primary" @click="createNewFolder">{{ $root.trans.save }}</button>
                         </div>
                     </div>
                 </div>

@@ -148,20 +148,6 @@ class MediaController extends Controller
         return response()->json(['message' => __('media.success.force_delete')]);
     }
 
-    public function getStorageStatus()
-    {
-        $total = disk_total_space('/');
-        $free = disk_free_space('/');
-        $filled = $total - $free;
-        $rate = floor($filled * 100 / $total);
-        $total = unitSizeForHuman($total);
-        $filled = unitSizeForHuman($filled);
-
-        $text = "$filled ($rate%) of $total used";
-
-        return response()->json(['rate' => $rate, 'text' => $text]);
-    }
-
     # region helpers
     private function getMediaData($medias)
     {

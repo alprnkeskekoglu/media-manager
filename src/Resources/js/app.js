@@ -78,9 +78,9 @@ const app = new Vue({
             },
             deep: true
         },
-        selected_medias: function (value) {
-            console.log(value);
-        }
+    },
+    beforeMount() {
+        this.getTranslations();
     },
     mounted() {
         this.getFolders();
@@ -107,6 +107,13 @@ const app = new Vue({
             axios.get('/dawnstar/media-manager/medias', {params: params})
                 .then(function (response) {
                     self.medias = response.data.medias;
+                });
+        },
+        getTranslations() {
+            var self = this;
+            axios.get('/dawnstar/media-manager/translations')
+                .then(function (response) {
+                    self.trans = response.data;
                 });
         }
     }

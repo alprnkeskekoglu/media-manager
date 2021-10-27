@@ -3,15 +3,14 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="newMediaModalLabel">New Media</h4>
+                    <h4 class="modal-title" id="newMediaModalLabel">{{ $root.trans.media.create_title }}</h4>
                     <button type="button" class="btn-close" id="newFolderModalClose" data-bs-dismiss="modal" aria-hidden="true"></button>
                 </div>
                 <div class="modal-body">
-
                     <div class="mb-3">
-                        <label for="folder" class="form-label">Select Folder</label>
+                        <label for="folder" class="form-label">{{ $root.trans.create.folder }}</label>
                         <select class="form-control" id="folder" v-model="folder">
-                            <option value="">Ana Dizin</option>
+                            <option value="">{{ $root.trans.home }}</option>
                             <option :value="folder.id" v-for="folder in $root.folders"> {{ folder.name }}</option>
                         </select>
                     </div>

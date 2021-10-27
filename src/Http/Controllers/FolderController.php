@@ -37,7 +37,7 @@ class FolderController extends Controller
 
         Folder::create($data);
 
-        return response()->json(['message' => __('folder.success.store')]);
+        return response()->json(['message' => __('MediaManager::folder.success.store')]);
     }
 
     public function destroy(Folder $folder)
@@ -58,7 +58,7 @@ class FolderController extends Controller
 
         $folder->delete();
 
-        return response()->json(['message' => __('folder.success.destroy')]);
+        return response()->json(['message' => __('MediaManager::folder.success.destroy')]);
     }
 
     public function recover(Request $request)
@@ -84,7 +84,7 @@ class FolderController extends Controller
         Storage::disk($disk . '_trash')->deleteDirectory($folder->name);
 
 
-        return response()->json(['message' => __('folder.success.recover')]);
+        return response()->json(['message' => __('MediaManager::folder.success.recover')]);
     }
 
     public function forceDelete(Request $request)
@@ -106,6 +106,6 @@ class FolderController extends Controller
         Storage::disk($disk)->deleteDirectory($folder->name);
 
         $folder->forceDelete();
-        return response()->json(['message' => __('folder.success.force_delete')]);
+        return response()->json(['message' => __('MediaManager::folder.success.force_delete')]);
     }
 }
