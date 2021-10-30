@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Media Manager</title>
     <link rel="shortcut icon" href="assets/images/favicon.ico">
-
     <link rel="stylesheet" href="{{ asset('vendor/dawnstar/assets/css/icons.min.css') }}">
     <link rel="stylesheet" href="{{ asset('vendor/dawnstar/assets/css/app-modern.min.css') }}" id="light-style">
     <link rel="stylesheet" href="{{ asset('vendor/dawnstar/assets/css/app-modern-dark.min.css') }}" id="dark-style">
@@ -60,6 +59,6 @@
 <script>
     window.csrf = '{{ csrf_token() }}'
 </script>
-<script src="{{ mix('js/compile.js') }}"></script>
+<script src="{{ mix('vendor/media-manager/assets/js/compile.js') }}"></script>
 </body>
 </html>

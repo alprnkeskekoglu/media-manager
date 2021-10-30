@@ -22,6 +22,6 @@ class FolderRequest extends FormRequest
 
     public function attributes()
     {
-        return __('folder.labels');
+        return __('MediaManager::folder.labels');
     }
 }

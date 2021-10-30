@@ -19,3 +19,10 @@ body.dark .selectedMedias:before {
 .sr-only {
     display: none;
 }
+[class="carousel-3d-slide"] {
+    opacity: 1!important;
+    visibility: initial!important;
+}
+.carousel-3d-slide {
+    background-color: unset !important;
+}
