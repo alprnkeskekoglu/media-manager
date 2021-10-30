@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'home' => 'Ana Dizin',
 
     'title' => [
         'index' => 'Klasörler',

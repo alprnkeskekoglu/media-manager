@@ -17,7 +17,7 @@
                             <div class="col-4 ps-1 ps-md-2">
                                 <div class="ms-2">
                                     <div class="position-absolute top-0 end-0 font-11">
-                                        <i class="mdi mdi-circle text-danger" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-content="Bu dosya kullanılmıyor!"></i>
+                                        <i class="mdi mdi-circle text-danger"></i>
                                     </div>
 
                                     <div class="form-check mt-1">

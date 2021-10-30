@@ -8,7 +8,8 @@ return [
     'download' => 'İndir',
     'save' => 'Kaydet',
     'storage' => 'Depolama Alanı',
-    'storage_text' => ":filled (:rate%) of :total",
+    'mod' => 'Mod',
+    'upload' => 'Yükle',
 
     'create' => [
         'title' => 'Yeni Ekle',

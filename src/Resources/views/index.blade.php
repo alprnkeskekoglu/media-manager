@@ -59,6 +59,6 @@
 <script>
     window.csrf = '{{ csrf_token() }}'
 </script>
-<script src="{{ mix('js/compile.js') }}"></script>
+<script src="{{ mix('vendor/media-manager/assets/js/compile.js') }}"></script>
 </body>
 </html>

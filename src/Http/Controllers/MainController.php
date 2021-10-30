@@ -33,8 +33,10 @@ class MainController extends Controller
             'delete' => __('MediaManager::general.delete'),
             'download' => __('MediaManager::general.download'),
             'storage' => __('MediaManager::general.storage'),
+            'mod' => __('MediaManager::general.mod'),
 
             'create' => __('MediaManager::general.create'),
+            'upload' => __('MediaManager::general.upload'),
 
             'type' => __('MediaManager::general.type'),
             'order' => __('MediaManager::general.order'),
@@ -44,13 +46,19 @@ class MainController extends Controller
                 'title' => __('MediaManager::folder.title.index'),
                 'create_title' => __('MediaManager::folder.title.create'),
                 'deleted_title' => __('MediaManager::folder.title.delete'),
+                'home' => __('MediaManager::folder.home'),
                 'name' => __('MediaManager::folder.labels.name')
             ],
+
             'media' => [
                 'title' => __('MediaManager::media.title.index'),
                 'create_title' => __('MediaManager::media.title.create'),
                 'deleted_title' => __('MediaManager::media.title.delete'),
-            ]
+                'upload' => __('MediaManager::media.upload'),
+                'dropzone' => __('MediaManager::media.dropzone'),
+
+            ],
+
         ]);
     }
 }

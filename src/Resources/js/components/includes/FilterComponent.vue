@@ -2,7 +2,7 @@
     <div class="row" v-if="Object.keys($root.trans).length">
         <div class="col-lg-3 col-md-6 mb-md-2">
             <select class="form-select" v-model="$root.filter.folder" v-if="$root.data_type === 'media' && !$root.is_trashed">
-                <option value="">{{ $root.trans.folder.title }}</option>
+                <option value="">{{ $root.trans.folder.home }}</option>
                 <option v-for="folder in $root.folders" :value="folder.id">{{ folder.name }}</option>
             </select>
         </div>

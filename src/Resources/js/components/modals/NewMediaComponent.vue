@@ -3,14 +3,14 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="newMediaModalLabel">{{ $root.trans.media.create_title }}</h4>
+                    <h4 class="modal-title" id="newMediaModalLabel">{{ $root.trans.media ? $root.trans.media.create_title : '' }}</h4>
                     <button type="button" class="btn-close" id="newFolderModalClose" data-bs-dismiss="modal" aria-hidden="true"></button>
                 </div>
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label for="folder" class="form-label">{{ $root.trans.create.folder }}</label>
+                        <label for="folder" class="form-label">{{ $root.trans.create ? $root.trans.create.folder : '' }}</label>
                         <select class="form-control" id="folder" v-model="folder">
-                            <option value="">{{ $root.trans.home }}</option>
+                            <option value="">{{ $root.trans.folder.home }}</option>
                             <option :value="folder.id" v-for="folder in $root.folders"> {{ folder.name }}</option>
                         </select>
                     </div>
@@ -19,13 +19,13 @@
                         <li class="nav-item">
                             <a href="#computer" data-bs-toggle="tab" aria-expanded="true" class="nav-link active">
                                 <i class="mdi mdi-home-variant d-md-none d-block"></i>
-                                <span class="d-none d-md-block">From Device</span>
+                                <span class="d-none d-md-block">{{ $root.trans.media.upload.device }}</span>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="#url" data-bs-toggle="tab" aria-expanded="false" class="nav-link">
                                 <i class="mdi mdi-account-circle d-md-none d-block"></i>
-                                <span class="d-none d-md-block">From Url</span>
+                                <span class="d-none d-md-block">{{ $root.trans.media.upload.url }}</span>
                             </a>
                         </li>
                     </ul>
@@ -35,8 +35,8 @@
                             <div class="mb-3">
                                 <vue-dropzone id="dropzone" :options="dropzoneOptions" :useCustomSlot=true v-on:vdropzone-sending="addData">
                                     <div>
-                                        <h3>Sürükle & Bırak</h3>
-                                        <div>...veya bilgisayarınızdan bir dosya seçmek için tıklayın</div>
+                                        <h3>{{ $root.trans.media.dropzone.title }}</h3>
+                                        <div>{{ $root.trans.media.dropzone.text }}</div>
                                     </div>
                                 </vue-dropzone>
                             </div>
@@ -44,10 +44,10 @@
                         <div class="tab-pane" id="url">
                             <div class="row mb-3">
                                 <div class="col-10">
-                                    <input type="text" v-model="url" :class="'form-control'" :placeholder="$root.trans.image_url">
+                                    <input type="text" v-model="url" class="form-control">
                                 </div>
                                 <div class="col-2 text-end">
-                                    <button class="btn btn-primary" @click="uploadFromUrl">Kaydet</button>
+                                    <button class="btn btn-primary" @click="uploadFromUrl">{{ $root.trans.upload }}</button>
                                 </div>
                             </div>
                         </div>

@@ -20,23 +20,23 @@
             </div>
         </div>
         <div class="email-menu-list mt-3">
-            <a href="javascript:void(0)" :class="'list-group-item border-0 rounded-1' + ($root.data_type == 'media' && !$root.is_trashed ? ' active' : '')"
+            <a href="javascript:void(0)" :class="'list-group-item border-0 rounded-1' + ($root.data_type === 'media' && !$root.is_trashed ? ' active' : '')"
                @click="changePage('media', false)">
                 <i class="mdi mdi-folder-image font-18 align-middle me-2"></i>
                 {{ $root.trans.media.title }}
             </a>
-            <a href="javascript:void(0)" :class="'list-group-item border-0 rounded-1' + ($root.data_type == 'media' && $root.is_trashed ? ' active' : '')"
+            <a href="javascript:void(0)" :class="'list-group-item border-0 rounded-1' + ($root.data_type === 'media' && $root.is_trashed ? ' active' : '')"
                @click="changePage('media', true)">
                 <i class="mdi mdi-delete font-18 align-middle me-2"></i>
                 {{ $root.trans.media.deleted_title }}
             </a>
             <hr>
-            <a href="javascript:void(0)" :class="'list-group-item border-0 rounded-1' + ($root.data_type == 'folder' && !$root.is_trashed ? ' active' : '')"
+            <a href="javascript:void(0)" :class="'list-group-item border-0 rounded-1' + ($root.data_type === 'folder' && !$root.is_trashed ? ' active' : '')"
                @click="changePage('folder', false)">
                 <i class="mdi mdi-folder font-18 align-middle me-2"></i>
                 {{ $root.trans.folder.title }}
             </a>
-            <a href="javascript:void(0)" :class="'list-group-item border-0 rounded-1' + ($root.data_type == 'folder' && $root.is_trashed ? ' active' : '')"
+            <a href="javascript:void(0)" :class="'list-group-item border-0 rounded-1' + ($root.data_type === 'folder' && $root.is_trashed ? ' active' : '')"
                @click="changePage('folder', true)">
                 <i class="mdi mdi-delete font-18 align-middle me-2"></i>
                 {{ $root.trans.folder.deleted_title }}
@@ -53,12 +53,12 @@
         </div>
 
         <div class="mt-5">
-            <p class="text-center text-muted mb-1">Mod</p>
+            <p class="text-center text-muted mb-1">{{ $root.trans.mod }}</p>
             <div class="d-flex justify-content-center align-items-center">
-                <i class="mdi mdi-18px mdi-lock-open-variant pe-2" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-placement="top" data-bs-content="Admin Panel Görselleri"></i>
+                <i class="mdi mdi-18px mdi-lock-open-variant pe-2"></i>
                 <input type="checkbox" id="mod" data-switch="secondary" v-model="$root.is_private" value="true"/>
                 <label for="mod" data-on-label="" data-off-label=""></label>
-                <i class="mdi mdi-18px mdi-lock ps-2" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-placement="bottom" data-bs-content="Kullanıcı Görselleri"></i>
+                <i class="mdi mdi-18px mdi-lock ps-2"></i>
             </div>
         </div>
 
