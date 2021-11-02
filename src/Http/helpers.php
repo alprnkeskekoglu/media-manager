@@ -7,6 +7,13 @@ function defaultImage()
     return 'https://via.placeholder.com/150';
 }
 
+function media(int $id = null) {
+    if(is_null($id)) {
+        return defaultImage();
+    }
+    return new \Dawnstar\MediaManager\Foundation\MediaService($id);
+}
+
 function unitSizeForHuman(int $bytes)
 {
     if ($bytes >= 1073741824) {

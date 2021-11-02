@@ -4,7 +4,7 @@
         <label class="form-label">{{ $label }}</label>
         @endisset
         <button type="button" class="btn btn-outline-primary float-end font-20 p-0 px-2 mediaManagerBtn" title="Media Manager"
-                data-id="{{ $key }}" data-maxcount="{{ $max_count }}" data-selectable="{{ $selectable }}">
+                data-id="{{ $key }}" data-maxcount="{{ $max_count ?? '' }}" data-selectable="{{ $selectable ?? 'image' }}">
             <i class="mdi mdi-image-plus"></i>
         </button>
     </div>
@@ -13,5 +13,5 @@
             <img src="https://via.placeholder.com/150" class="img-fluid mh-100">
         </div>
     </div>
-    <input type="hidden" name="{{ $key }}" id="{{ $key }}">
+    <input type="hidden" name="medias[{{ $key }}]" id="{{ $key }}">
 </div>

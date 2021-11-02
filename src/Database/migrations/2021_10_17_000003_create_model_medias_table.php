@@ -17,7 +17,7 @@ class CreateModelMediasTable extends Migration
             $table->morphs('model');
             $table->unsignedBigInteger('media_id')->index();
             $table->string('key')->index();
-            $table->unsignedInteger('order');
+            $table->unsignedInteger('order')->nullable();
 
             $table->foreign('media_id')->references('id')->on('medias')->cascadeOnDelete();
         });

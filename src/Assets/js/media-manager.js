@@ -1,8 +1,8 @@
 var current_id;
 $('body').delegate('.mediaManagerBtn', 'click', function () {
     current_id = $(this).attr('data-id');
-    var max_count = $(this).attr('data-maxCount') == undefined ? '' : $(this).attr('data-maxCount');
-    var selectable = $(this).attr('data-selectable') == undefined ? '' : $(this).attr('data-selectable');
+    var max_count = $(this).attr('data-maxCount');
+    var selectable = $(this).attr('data-selectable');
     var selected_media_ids = $('#' + current_id).val();
 
     window.open(
@@ -22,9 +22,7 @@ $('body').delegate('.removeMediaBtn', 'click', function () {
     }
 
     $(this).closest('.mediaBox').find('input').val(selected_media_ids.join(','))
-    $(this).closest('.avatar-xl').find('img').attr('src', 'https://via.placeholder.com/150');
-    $(this).closest('.avatar-xl').find('span').remove();
-    $(this).parent().remove();
+    $(this).closest('.avatar-xl').remove();
 });
 
 function handleMediaManager(medias) {
