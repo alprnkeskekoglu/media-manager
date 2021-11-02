@@ -43,7 +43,6 @@ const app = new Vue({
         is_trashed: false,
         folders: {},
         medias: {},
-        selected_medias: [],
         filter: {
             folder: '',
             type: '',
@@ -51,6 +50,11 @@ const app = new Vue({
             search: ''
         },
         trans: {},
+
+        selected_medias: [],
+        selected_media_ids: [],
+        selectable: null,
+        max_count: null,
     },
     watch: {
         is_private: function (value) {
@@ -81,6 +85,18 @@ const app = new Vue({
     },
     beforeMount() {
         this.getTranslations();
+
+        const params = new URLSearchParams(window.location.search);
+
+        if(params.has('maxCount')) {
+            this.max_count = params.get('maxCount');
+        }
+        if(params.has('selectable')) {
+            this.selectable = params.get('selectable');
+        }
+        if(params.has('selectedMediaIds')) {
+            this.getSelectedMedias(params.get('selectedMediaIds'));
+        }
     },
     mounted() {
         this.getFolders();
@@ -107,6 +123,13 @@ const app = new Vue({
             axios.get('/dawnstar/media-manager/medias', {params: params})
                 .then(function (response) {
                     self.medias = response.data.medias;
+                });
+        },
+        getSelectedMedias(ids) {
+            var self = this;
+            axios.get('/dawnstar/media-manager/medias/getSelected', {params: {ids: ids}})
+                .then(function (response) {
+                    self.selected_medias = response.data.medias;
                 });
         },
         getTranslations() {

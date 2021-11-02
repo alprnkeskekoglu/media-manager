@@ -75,7 +75,6 @@ export default {
         }
     },
     mounted() {
-        console.log('sidebar')
         this.getStorageStatus();
     },
     methods: {

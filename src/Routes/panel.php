@@ -12,6 +12,7 @@ Route::apiResource('folders', FolderController::class);
 Route::post('folders/recover', [FolderController::class, 'recover']);
 Route::post('folders/force-delete', [FolderController::class, 'forceDelete']);
 
+Route::get('medias/getSelected', [MediaController::class, 'getSelected']);
 Route::apiResource('medias', MediaController::class);
 Route::post('medias/recover', [MediaController::class, 'recover']);
 Route::post('medias/force-delete', [MediaController::class, 'forceDelete']);

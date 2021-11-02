@@ -4,6 +4,7 @@ namespace Dawnstar\MediaManager\Http\Controllers;
 
 use Dawnstar\MediaManager\Foundation\MediaUpload;
 use Dawnstar\MediaManager\Models\Media;
+use Dawnstar\MediaManager\Models\ModelMedia;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Storage;
@@ -120,6 +121,15 @@ class MediaController extends Controller
         return response()->json(['message' => __('media.success.destroy')]);
     }
 
+    public function getSelected(Request $request)
+    {
+        $ids = explode(',', $request->get('ids', ''));
+        $medias = Media::whereIn('id', $ids)->get();
+        $medias = $this->getMediaData($medias);
+
+        return response()->json(['medias' => $medias]);
+    }
+
     public function recover(Request $request)
     {
         $id = $request->get('id');
@@ -161,7 +171,8 @@ class MediaController extends Controller
                 'mime_type' => $media->mime_type,
                 'image' => getMediaImage($media),
                 'url' => $media->url,
-                'size' => unitSizeForHuman($media->size)
+                'size' => unitSizeForHuman($media->size),
+                'in_use' => ModelMedia::where('media_id', $media->id)->exists()
             ];
         }
         return $mediaData;

@@ -58,7 +58,29 @@
 <script src="{{ asset('vendor/media-manager/assets/js/media-manager.js') }}"></script>
 <script>
     window.csrf = '{{ csrf_token() }}'
+    function showNotification(type, message) {
+        toastr.options = {
+            "closeButton": true,
+            "newestOnTop": true,
+            "progressBar": true,
+            "positionClass": "toast-bottom-right",
+            "showDuration": "100",
+            "hideDuration": "750",
+            "timeOut": "2000",
+            "extendedTimeOut": "750",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+
+        if (type === 'success') {
+            toastr.success(message)
+        } else if (type === 'error') {
+            toastr.error(message)
+        }
+    }
 </script>
-<script src="{{ mix('vendor/media-manager/assets/js/compile.js') }}"></script>
+<script src="{{ mix('js/compile.js') }}"></script>
 </body>
 </html>

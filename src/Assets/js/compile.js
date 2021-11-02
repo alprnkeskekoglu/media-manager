@@ -2289,6 +2289,18 @@ __webpack_require__.r(__webpack_exports__);
     Carousel3d: vue_carousel_3d__WEBPACK_IMPORTED_MODULE_0__.Carousel3d,
     Slide: vue_carousel_3d__WEBPACK_IMPORTED_MODULE_0__.Slide
   },
+  watch: {
+    '$root.selected_medias': {
+      handler: function handler() {
+        var self = this;
+        self.$root.selected_media_ids = [];
+        self.$root.selected_medias.forEach(function (item, index) {
+          self.$root.selected_media_ids.push(item.id);
+        });
+      },
+      deep: true
+    }
+  },
   methods: {
     removeMedia: function removeMedia(id) {
       var self = this;
@@ -2298,6 +2310,18 @@ __webpack_require__.r(__webpack_exports__);
           return;
         }
       });
+    },
+    sendMedias: function sendMedias() {
+      if (window.CKEditor) {
+        if (this.$parent.selectedMedias[0]) {
+          window.opener.CKEDITOR.tools.callFunction(window.CKEditor, this.$root.selected_medias[0].image);
+        }
+
+        window.close();
+      } else {
+        window.opener.handleMediaManager(this.$root.selected_medias);
+        window.close();
+      }
     }
   }
 });
@@ -2391,7 +2415,6 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    console.log('sidebar');
     this.getStorageStatus();
   },
   methods: {
@@ -2424,6 +2447,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
+//
+//
 //
 //
 //
@@ -2807,14 +2834,17 @@ var app = new Vue({
     is_trashed: false,
     folders: {},
     medias: {},
-    selected_medias: [],
     filter: {
       folder: '',
       type: '',
       order: 'uploaded_desc',
       search: ''
     },
-    trans: {}
+    trans: {},
+    selected_medias: [],
+    selected_media_ids: [],
+    selectable: null,
+    max_count: null
   },
   watch: {
     is_private: function is_private(value) {
@@ -2845,6 +2875,19 @@ var app = new Vue({
   },
   beforeMount: function beforeMount() {
     this.getTranslations();
+    var params = new URLSearchParams(window.location.search);
+
+    if (params.has('maxCount')) {
+      this.max_count = params.get('maxCount');
+    }
+
+    if (params.has('selectable')) {
+      this.selectable = params.get('selectable');
+    }
+
+    if (params.has('selectedMediaIds')) {
+      this.getSelectedMedias(params.get('selectedMediaIds'));
+    }
   },
   mounted: function mounted() {
     this.getFolders();
@@ -2872,6 +2915,16 @@ var app = new Vue({
         params: params
       }).then(function (response) {
         self.medias = response.data.medias;
+      });
+    },
+    getSelectedMedias: function getSelectedMedias(ids) {
+      var self = this;
+      axios.get('/dawnstar/media-manager/medias/getSelected', {
+        params: {
+          ids: ids
+        }
+      }).then(function (response) {
+        self.selected_medias = response.data.medias;
       });
     },
     getTranslations: function getTranslations() {
@@ -44310,9 +44363,18 @@ var render = function() {
           staticClass: "col-2 d-flex justify-content-center align-items-center"
         },
         [
-          _c("button", { staticClass: "btn btn-primary" }, [
-            _vm._v(_vm._s(_vm.$root.trans.send))
-          ])
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-primary",
+              on: {
+                click: function($event) {
+                  return _vm.sendMedias()
+                }
+              }
+            },
+            [_vm._v(_vm._s(_vm.$root.trans.send))]
+          )
         ]
       )
     ])
@@ -44697,58 +44759,79 @@ var render = function() {
                   _vm._v(" "),
                   _c("div", { staticClass: "col-4 ps-1 ps-md-2" }, [
                     _c("div", { staticClass: "ms-2" }, [
-                      _vm._m(0, true),
+                      _c(
+                        "div",
+                        {
+                          staticClass: "position-absolute top-0 end-0 font-11"
+                        },
+                        [
+                          _c("i", {
+                            class:
+                              "mdi mdi-circle " +
+                              (media.in_use ? "text-success" : "text-danger")
+                          })
+                        ]
+                      ),
                       _vm._v(" "),
                       _c("div", { staticClass: "form-check mt-1" }, [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.$root.selected_medias,
-                              expression: "$root.selected_medias"
-                            }
-                          ],
-                          staticClass: "form-check-input",
-                          staticStyle: { width: "25px", height: "25px" },
-                          attrs: { type: "checkbox" },
-                          domProps: {
-                            value: media,
-                            checked: Array.isArray(_vm.$root.selected_medias)
-                              ? _vm._i(_vm.$root.selected_medias, media) > -1
-                              : _vm.$root.selected_medias
-                          },
-                          on: {
-                            change: function($event) {
-                              var $$a = _vm.$root.selected_medias,
-                                $$el = $event.target,
-                                $$c = $$el.checked ? true : false
-                              if (Array.isArray($$a)) {
-                                var $$v = media,
-                                  $$i = _vm._i($$a, $$v)
-                                if ($$el.checked) {
-                                  $$i < 0 &&
-                                    _vm.$set(
-                                      _vm.$root,
-                                      "selected_medias",
-                                      $$a.concat([$$v])
-                                    )
-                                } else {
-                                  $$i > -1 &&
-                                    _vm.$set(
-                                      _vm.$root,
-                                      "selected_medias",
-                                      $$a
-                                        .slice(0, $$i)
-                                        .concat($$a.slice($$i + 1))
-                                    )
+                        (_vm.$root.selectable == null ||
+                          _vm.$root.selectable === media.mime_class) &&
+                        (_vm.$root.selected_medias.length <
+                          _vm.$root.max_count ||
+                          _vm.$root.selected_media_ids.indexOf(media.id) !== -1)
+                          ? _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.$root.selected_medias,
+                                  expression: "$root.selected_medias"
                                 }
-                              } else {
-                                _vm.$set(_vm.$root, "selected_medias", $$c)
+                              ],
+                              staticClass: "form-check-input",
+                              staticStyle: { width: "25px", height: "25px" },
+                              attrs: { type: "checkbox" },
+                              domProps: {
+                                value: media,
+                                checked: Array.isArray(
+                                  _vm.$root.selected_medias
+                                )
+                                  ? _vm._i(_vm.$root.selected_medias, media) >
+                                    -1
+                                  : _vm.$root.selected_medias
+                              },
+                              on: {
+                                change: function($event) {
+                                  var $$a = _vm.$root.selected_medias,
+                                    $$el = $event.target,
+                                    $$c = $$el.checked ? true : false
+                                  if (Array.isArray($$a)) {
+                                    var $$v = media,
+                                      $$i = _vm._i($$a, $$v)
+                                    if ($$el.checked) {
+                                      $$i < 0 &&
+                                        _vm.$set(
+                                          _vm.$root,
+                                          "selected_medias",
+                                          $$a.concat([$$v])
+                                        )
+                                    } else {
+                                      $$i > -1 &&
+                                        _vm.$set(
+                                          _vm.$root,
+                                          "selected_medias",
+                                          $$a
+                                            .slice(0, $$i)
+                                            .concat($$a.slice($$i + 1))
+                                        )
+                                    }
+                                  } else {
+                                    _vm.$set(_vm.$root, "selected_medias", $$c)
+                                  }
+                                }
                               }
-                            }
-                          }
-                        })
+                            })
+                          : _vm._e()
                       ]),
                       _vm._v(" "),
                       _c("div", { staticClass: "mt-2" }, [
@@ -44835,16 +44918,7 @@ var render = function() {
     )
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "position-absolute top-0 end-0 font-11" }, [
-      _c("i", { staticClass: "mdi mdi-circle text-danger" })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -45228,7 +45302,13 @@ var render = function() {
                 },
                 [
                   _c("option", { attrs: { value: "" } }, [
-                    _vm._v(_vm._s(_vm.$root.trans.folder.home))
+                    _vm._v(
+                      _vm._s(
+                        _vm.$root.trans.folder
+                          ? _vm.$root.trans.folder.home
+                          : ""
+                      )
+                    )
                   ]),
                   _vm._v(" "),
                   _vm._l(_vm.$root.folders, function(folder) {
@@ -45262,7 +45342,13 @@ var render = function() {
                       }),
                       _vm._v(" "),
                       _c("span", { staticClass: "d-none d-md-block" }, [
-                        _vm._v(_vm._s(_vm.$root.trans.media.upload.device))
+                        _vm._v(
+                          _vm._s(
+                            _vm.$root.trans.media
+                              ? _vm.$root.trans.media.upload.device
+                              : ""
+                          )
+                        )
                       ])
                     ]
                   )
@@ -45285,7 +45371,13 @@ var render = function() {
                       }),
                       _vm._v(" "),
                       _c("span", { staticClass: "d-none d-md-block" }, [
-                        _vm._v(_vm._s(_vm.$root.trans.media.upload.url))
+                        _vm._v(
+                          _vm._s(
+                            _vm.$root.trans.media
+                              ? _vm.$root.trans.media.upload.url
+                              : ""
+                          )
+                        )
                       ])
                     ]
                   )
@@ -45319,13 +45411,21 @@ var render = function() {
                           _c("div", [
                             _c("h3", [
                               _vm._v(
-                                _vm._s(_vm.$root.trans.media.dropzone.title)
+                                _vm._s(
+                                  _vm.$root.trans.media
+                                    ? _vm.$root.trans.media.dropzone.title
+                                    : ""
+                                )
                               )
                             ]),
                             _vm._v(" "),
                             _c("div", [
                               _vm._v(
-                                _vm._s(_vm.$root.trans.media.dropzone.text)
+                                _vm._s(
+                                  _vm.$root.trans.media
+                                    ? _vm.$root.trans.media.dropzone.text
+                                    : ""
+                                )
                               )
                             ])
                           ])

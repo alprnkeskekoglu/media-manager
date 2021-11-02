@@ -17,11 +17,15 @@
                             <div class="col-4 ps-1 ps-md-2">
                                 <div class="ms-2">
                                     <div class="position-absolute top-0 end-0 font-11">
-                                        <i class="mdi mdi-circle text-danger"></i>
+                                        <i :class="'mdi mdi-circle ' + (media.in_use ? 'text-success' : 'text-danger')"></i>
                                     </div>
 
                                     <div class="form-check mt-1">
-                                        <input type="checkbox" class="form-check-input" v-model="$root.selected_medias" :value="media" style="width: 25px; height: 25px">
+                                        <input type="checkbox" class="form-check-input"
+                                               v-model="$root.selected_medias" :value="media"
+                                               v-if="($root.selectable == null || $root.selectable === media.mime_class) &&
+                                               ($root.selected_medias.length < $root.max_count || $root.selected_media_ids.indexOf(media.id) !== -1)"
+                                               style="width: 25px; height: 25px">
                                     </div>
                                     <div class="mt-2">
                                         <a :href="media.url" :download="media.full_name">
