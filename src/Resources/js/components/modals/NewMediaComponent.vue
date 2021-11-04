@@ -10,7 +10,7 @@
                     <div class="mb-3">
                         <label for="folder" class="form-label">{{ $root.trans.create ? $root.trans.create.folder : '' }}</label>
                         <select class="form-control" id="folder" v-model="folder">
-                            <option value="">{{ $root.trans.folder.home }}</option>
+                            <option value="">{{ $root.trans.folder ? $root.trans.folder.home : '' }}</option>
                             <option :value="folder.id" v-for="folder in $root.folders"> {{ folder.name }}</option>
                         </select>
                     </div>
@@ -19,13 +19,13 @@
                         <li class="nav-item">
                             <a href="#computer" data-bs-toggle="tab" aria-expanded="true" class="nav-link active">
                                 <i class="mdi mdi-home-variant d-md-none d-block"></i>
-                                <span class="d-none d-md-block">{{ $root.trans.media.upload.device }}</span>
+                                <span class="d-none d-md-block">{{ $root.trans.media ? $root.trans.media.upload.device : '' }}</span>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="#url" data-bs-toggle="tab" aria-expanded="false" class="nav-link">
                                 <i class="mdi mdi-account-circle d-md-none d-block"></i>
-                                <span class="d-none d-md-block">{{ $root.trans.media.upload.url }}</span>
+                                <span class="d-none d-md-block">{{ $root.trans.media ? $root.trans.media.upload.url : '' }}</span>
                             </a>
                         </li>
                     </ul>
@@ -35,8 +35,8 @@
                             <div class="mb-3">
                                 <vue-dropzone id="dropzone" :options="dropzoneOptions" :useCustomSlot=true v-on:vdropzone-sending="addData">
                                     <div>
-                                        <h3>{{ $root.trans.media.dropzone.title }}</h3>
-                                        <div>{{ $root.trans.media.dropzone.text }}</div>
+                                        <h3>{{ $root.trans.media ? $root.trans.media.dropzone.title : '' }}</h3>
+                                        <div>{{ $root.trans.media ? $root.trans.media.dropzone.text : '' }}</div>
                                     </div>
                                 </vue-dropzone>
                             </div>

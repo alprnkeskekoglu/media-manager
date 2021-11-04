@@ -18,7 +18,7 @@
                 </carousel-3d>
             </div>
             <div class="col-2 d-flex justify-content-center align-items-center">
-                <button class="btn btn-primary">{{ $root.trans.send }}</button>
+                <button class="btn btn-primary" @click="sendMedias()">{{ $root.trans.send }}</button>
             </div>
         </div>
     </div>
@@ -33,6 +33,18 @@ export default {
         Carousel3d,
         Slide
     },
+    watch: {
+        '$root.selected_medias': {
+            handler: function () {
+                var self = this;
+                self.$root.selected_media_ids = [];
+                self.$root.selected_medias.forEach(function (item, index) {
+                    self.$root.selected_media_ids.push(item.id)
+                });
+            },
+            deep: true
+        }
+    },
     methods: {
         removeMedia(id) {
             var self = this;
@@ -42,6 +54,17 @@ export default {
                     return;
                 }
             });
+        },
+        sendMedias() {
+            if(window.CKEditor) {
+                if(this.$parent.selectedMedias[0]) {
+                    window.opener.CKEDITOR.tools.callFunction(window.CKEditor, this.$root.selected_medias[0].image);
+                }
+                window.close();
+            } else {
+                window.opener.handleMediaManager(this.$root.selected_medias);
+                window.close();
+            }
         }
     }
 }
