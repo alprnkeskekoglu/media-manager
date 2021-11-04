@@ -52,7 +52,7 @@
     </div>
 </div>
 
-<script src="{{ asset('vendor/dawnstar/assets/js/vendor.min.js') }}"></script>
+<script src="{{ asset('vendor/dawnstar/assets/js/jquery.min.js') }}"></script>
 <script src="{{ asset('vendor/dawnstar/assets/js/app.min.js') }}"></script>
 <script src="{{ asset('vendor/media-manager/assets/js/toastr.min.js') }}"></script>
 <script src="{{ asset('vendor/media-manager/assets/js/media-manager.js') }}"></script>
