@@ -52,12 +52,13 @@
     </div>
 </div>
 
-<script src="{{ asset('vendor/dawnstar/assets/js/jquery.min.js') }}"></script>
+<script src="{{ asset('vendor/dawnstar/assets/js/vendor.min.js') }}"></script>
 <script src="{{ asset('vendor/dawnstar/assets/js/app.min.js') }}"></script>
 <script src="{{ asset('vendor/media-manager/assets/js/toastr.min.js') }}"></script>
 <script src="{{ asset('vendor/media-manager/assets/js/media-manager.js') }}"></script>
 <script>
     window.csrf = '{{ csrf_token() }}'
+    window.CKEditor = '{{ request('CKEditorFuncNum') }}'
     function showNotification(type, message) {
         toastr.options = {
             "closeButton": true,
@@ -81,6 +82,6 @@
         }
     }
 </script>
-<script src="{{ mix('js/compile.js') }}"></script>
+<script src="{{ asset('vendor/media-manager/assets/js/compile.js') }}"></script>
 </body>
 </html>
