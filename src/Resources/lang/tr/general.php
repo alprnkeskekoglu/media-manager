@@ -10,6 +10,7 @@ return [
     'storage' => 'Depolama Alanı',
     'mod' => 'Mod',
     'upload' => 'Yükle',
+    'storage_text' => ":filled (:rate%) of :total",
 
     'create' => [
         'title' => 'Yeni Ekle',

@@ -10,6 +10,7 @@ return [
     'storage' => 'Storage',
     'mod' => 'Mode',
     'upload' => 'Upload',
+    'storage_text' => ":filled (:rate%) of :total",
 
     'create' => [
         'title' => 'Add New',

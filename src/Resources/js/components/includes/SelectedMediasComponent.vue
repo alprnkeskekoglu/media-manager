@@ -57,7 +57,7 @@ export default {
         },
         sendMedias() {
             if(window.CKEditor) {
-                if(this.$parent.selectedMedias[0]) {
+                if(this.$root.selected_medias[0]) {
                     window.opener.CKEDITOR.tools.callFunction(window.CKEditor, this.$root.selected_medias[0].image);
                 }
                 window.close();

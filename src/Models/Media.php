@@ -28,4 +28,9 @@ class Media extends Model
     {
         return route('media', $this->uid);
     }
+
+    public function __toString()
+    {
+        return $this->getUrlAttribute();
+    }
 }

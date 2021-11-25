@@ -90,9 +90,6 @@ const app = new Vue({
 
         if(params.has('maxCount')) {
             this.max_count = params.get('maxCount');
-            console.log(this.max_count);
-            console.log(this.max_count === undefined);
-            console.log(this.max_count === '');
         }
         if(params.has('selectable')) {
             this.selectable = params.get('selectable');
