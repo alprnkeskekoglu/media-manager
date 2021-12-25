@@ -20,7 +20,7 @@ class MediaManagerServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__ . '/Resources/views', 'MediaManager');
         $this->loadTranslationsFrom(__DIR__ . '/Resources/lang', 'MediaManager');
 
-        $this->publishes([__DIR__ . '/Assets' => public_path('vendor/media-manager/assets')], 'media-manager-assets');
+        $this->publishes([__DIR__ . '/Assets' => public_path('vendor/dawnstar/media-manager')], 'dawnstar-media-manager-assets');
     }
 }
 

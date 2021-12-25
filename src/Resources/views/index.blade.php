@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Media Manager</title>
     <link rel="shortcut icon" href="assets/images/favicon.ico">
-    <link rel="stylesheet" href="{{ asset('vendor/dawnstar/assets/css/icons.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('vendor/dawnstar/assets/css/app-modern.min.css') }}" id="light-style">
-    <link rel="stylesheet" href="{{ asset('vendor/dawnstar/assets/css/app-modern-dark.min.css') }}" id="dark-style">
-    <link rel="stylesheet" href="{{ asset('vendor/media-manager/assets/css/toastr.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('vendor/media-manager/assets/css/media-manager.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/dawnstar/core/css/icons.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/dawnstar/core/css/app-modern.min.css') }}" id="light-style">
+    <link rel="stylesheet" href="{{ asset('vendor/dawnstar/core/css/app-modern-dark.min.css') }}" id="dark-style">
+    <link rel="stylesheet" href="{{ asset('vendor/dawnstar/media-manager/css/toastr.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/dawnstar/media-manager/css/media-manager.css') }}">
 </head>
 
 <body class="loading" data-layout="detached">
@@ -52,10 +52,10 @@
     </div>
 </div>
 
-<script src="{{ asset('vendor/dawnstar/assets/js/vendor.min.js') }}"></script>
-<script src="{{ asset('vendor/dawnstar/assets/js/app.min.js') }}"></script>
-<script src="{{ asset('vendor/media-manager/assets/js/toastr.min.js') }}"></script>
-<script src="{{ asset('vendor/media-manager/assets/js/media-manager.js') }}"></script>
+<script src="{{ asset('vendor/dawnstar/core/js/vendor.min.js') }}"></script>
+<script src="{{ asset('vendor/dawnstar/core/js/app.min.js') }}"></script>
+<script src="{{ asset('vendor/dawnstar/media-manager/js/toastr.min.js') }}"></script>
+<script src="{{ asset('vendor/dawnstar/media-manager/js/media-manager.js') }}"></script>
 <script>
     window.csrf = '{{ csrf_token() }}'
     window.CKEditor = '{{ request('CKEditorFuncNum') }}'
@@ -82,6 +82,6 @@
         }
     }
 </script>
-<script src="{{ asset('vendor/media-manager/assets/js/compile.js') }}"></script>
+<script src="{{ asset('vendor/dawnstar/media-manager/js/compile.js') }}"></script>
 </body>
 </html>

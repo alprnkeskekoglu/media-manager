@@ -35,20 +35,20 @@ function unitSizeForHuman(int $bytes)
 
 function getMediaImage($media): string
 {
-    $return = asset('vendor/media-manager/assets/medias/default.png');
+    $return = asset('vendor/dawnstar/media-manager/medias/default.png');
     if ($media->mime_class == 'image') {
         $return = getImageUrl($media);
     } elseif (in_array($media->mime_class, ['audio', 'video', 'text'])) {
-        $return = asset('vendor/media-manager/assets/medias/' . $media->mime_class . '.png');
+        $return = asset('vendor/dawnstar/media-manager/medias/' . $media->mime_class . '.png');
     } elseif ($media->mime_class == 'application') {
         if ($media->mime_type == 'application/pdf') {
-            $return = asset('vendor/media-manager/assets/medias/pdf.png');
+            $return = asset('vendor/dawnstar/media-manager/medias/pdf.png');
         } elseif (in_array($media->extension, ['csv', 'xlsx', 'xls'])) {
-            $return = asset('vendor/media-manager/assets/medias/xls.png');
+            $return = asset('vendor/dawnstar/media-manager/medias/xls.png');
         } elseif (in_array($media->extension, ['doc', 'docx', 'ods'])) {
-            $return = asset('vendor/media-manager/assets/medias/doc.png');
+            $return = asset('vendor/dawnstar/media-manager/medias/doc.png');
         } elseif (in_array($media->extension, ['ppt', 'pptx'])) {
-            $return = asset('vendor/media-manager/assets/medias/ppt.png');
+            $return = asset('vendor/dawnstar/media-manager/medias/ppt.png');
         }
     }
     return $return;
