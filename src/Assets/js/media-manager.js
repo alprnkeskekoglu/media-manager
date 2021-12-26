@@ -33,8 +33,10 @@ function handleMediaManager(medias) {
         $.each(medias, function (index, data) {
             ids += data.id + ',';
             mediaHtml += '' +
-                '<div class="avatar-xl position-relative" style="background-color: #efefef;">' +
+                '<div class="avatar-xl position-relative me-3" style="background-color: #efefef;">' +
+                '<span class="avatar-title bg-light text-secondary rounded">'+
                 '<img src="' + data.image + '" class="img-fluid mh-100 rounded">' +
+                '</span>'+
                 '<span class="d-block text-center text-muted">' + data.name + '</span>' +
                 '<div class="d-grid end-0 mb-n1 me-n2 position-absolute bottom-0">'+
                 '<a href="javascript:void(0);" class="removeMediaBtn" data-id="' + data.id + '">' +
@@ -45,8 +47,10 @@ function handleMediaManager(medias) {
         });
     } else {
         mediaHtml += '' +
-            '<div class="avatar-xl position-relative">' +
+            '<div class="avatar-xl position-relative me-3">' +
+            '<span class="avatar-title bg-light text-secondary rounded">'+
             '<img src="https://via.placeholder.com/150" class="img-fluid mh-100">' +
+            '</span>'+
             '</div>';
     }
 
