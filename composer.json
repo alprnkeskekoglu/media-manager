@@ -3,6 +3,9 @@
     "description": "Package for Media Manager",
     "license": "MIT",
     "minimum-stability": "stable",
+    "require": {
+        "intervention/image": "^2.7",
+    },
     "autoload": {
         "psr-4": {
             "Dawnstar\\MediaManager\\": "src"

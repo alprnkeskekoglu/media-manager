@@ -18,6 +18,7 @@ class CreateMediasTable extends Migration
             $table->unsignedBigInteger('folder_id')->nullable();
             $table->string('uid')->nullable();
             $table->boolean('private')->default(0);
+            $table->tinyInteger('type')->default(1);
             $table->string('name');
             $table->string('extension');
             $table->string('full_name');

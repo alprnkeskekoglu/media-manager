@@ -8,6 +8,13 @@ use Illuminate\Support\Facades\Storage;
 
 class Media extends Model
 {
+    /* Type
+     * 1 -> Original
+     * 2 -> Webp
+     * 3 -> Resize
+     * 4 -> Rotate
+     */
+
     use SoftDeletes;
 
     protected $table = 'medias';
