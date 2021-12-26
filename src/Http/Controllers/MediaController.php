@@ -36,7 +36,7 @@ class MediaController extends Controller
         $order = $request->get('order');
 
 
-        $medias = Media::where('private', $private);
+        $medias = Media::where('private', $private)->where('type', 1);
 
         if($trashed) {
             $medias = $medias->where('folder_id', null)->onlyTrashed();
