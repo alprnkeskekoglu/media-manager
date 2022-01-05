@@ -106,7 +106,7 @@ class MediaController extends Controller
             throw new \Exception(__('media.error.store'));
         }
 
-        return response()->json(['message' => __('media.success.store')]);
+        return response()->json(['message' => __('MediaManager::media.success.store')]);
     }
 
     public function destroy(Media $media)
@@ -118,7 +118,7 @@ class MediaController extends Controller
         $media->update(['folder_id' => null]);
         $media->delete();
 
-        return response()->json(['message' => __('media.success.destroy')]);
+        return response()->json(['message' => __('MediaManager::media.success.destroy')]);
     }
 
     public function getSelected(Request $request)
@@ -142,7 +142,7 @@ class MediaController extends Controller
         Storage::disk($disk . '_trash')->delete($media->full_name);
 
         $media->restore();
-        return response()->json(['message' => __('media.success.recover')]);
+        return response()->json(['message' => __('MediaManager::media.success.recover')]);
     }
 
     public function forceDelete(Request $request)
@@ -155,7 +155,7 @@ class MediaController extends Controller
         Storage::disk($disk)->delete($media->full_name);
         $media->forceDelete();
 
-        return response()->json(['message' => __('media.success.force_delete')]);
+        return response()->json(['message' => __('MediaManager::media.success.force_delete')]);
     }
 
     # region helpers

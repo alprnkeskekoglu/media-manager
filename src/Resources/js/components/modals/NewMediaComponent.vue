@@ -96,7 +96,7 @@ export default {
     methods: {
         uploadFromUrl() {
             var self = this;
-            axios.post('dawnstar/media-manager/medias', {folder_id: self.folder, url: self.url, private: self.$root.is_private})
+            axios.post('/dawnstar/media-manager/medias', {folder_id: self.folder, url: self.url, private: self.$root.is_private})
                 .then(function (response) {
                     showNotification('success', response.data.message);
                 })

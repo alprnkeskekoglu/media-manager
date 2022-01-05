@@ -19,7 +19,7 @@ return [
     ],
 
     'success' => [
-        'store' => 'Medya başarıyla oluşturuldu.',
+        'store' => 'Medya başarıyla yüklendi.',
         'destroy' => 'Medya başarıyla silindi.',
         'recover' => 'Medya başarıyla geri yüklendi.',
         'force_delete' => 'Medya tamamen silindi.'

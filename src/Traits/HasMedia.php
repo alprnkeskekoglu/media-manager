@@ -40,6 +40,7 @@ trait HasMedia
         if ($attribute) {
             return $attribute;
         }
+        dump($this);
 
         if(\Str::startsWith($key, 'mf_')) {
             $key = mb_substr($key, 3);

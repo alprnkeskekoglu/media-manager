@@ -18,7 +18,7 @@ return [
     ],
 
     'success' => [
-        'store' => 'Media was created successfully.',
+        'store' => 'Media was uploaded successfully.',
         'destroy' => 'Media was successfully deleted.',
         'recover' => 'Media was successfully restored.',
         'force_delete' => 'Media completely deleted.'
