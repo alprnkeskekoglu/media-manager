@@ -1,7 +1,8 @@
 <template>
     <div class="page-aside-left" v-if="Object.keys($root.trans).length">
         <div class="mb-3">
-            <img src="/vendor/dawnstar/core/medias/logo.png" alt="image" class="img-fluid rounded" width="210"/>
+            <img src="/vendor/dawnstar/core/medias/logo.png" v-if="$root.is_private" alt="Dawnstar Media Manager" class="img-fluid rounded" width="210"/>
+            <img src="/vendor/dawnstar/core/medias/logo-dark.png" v-else alt="Dawnstar Media Manager" class="img-fluid rounded" width="210"/>
         </div>
         <div class="btn-group d-block mb-2">
             <button type="button" class="btn btn-success dropdown-toggle w-100" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
