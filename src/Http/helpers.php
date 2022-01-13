@@ -1,17 +1,22 @@
 <?php
 
 use Illuminate\Support\Facades\Storage;
+use Dawnstar\MediaManager\Models\Media;
 
 function defaultImage()
 {
     return 'https://via.placeholder.com/150';
 }
 
-function media(int $id = null) {
-    if(is_null($id)) {
+function media(int|Media $media = null) {
+
+    if(is_null($media)) {
         return defaultImage();
+    } elseif(is_integer($media)) {
+        return new \Dawnstar\MediaManager\Foundation\MediaService($media);
+    } else {
+        return new \Dawnstar\MediaManager\Foundation\MediaService($media->id);
     }
-    return new \Dawnstar\MediaManager\Foundation\MediaService($id);
 }
 
 function unitSizeForHuman(int $bytes)
