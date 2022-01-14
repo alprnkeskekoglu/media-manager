@@ -209,6 +209,10 @@ class MediaService
 
     private function convertWebp()
     {
+        if(\Str::startsWith(request()->getPathInfo(), '/dawnstar') || !Storage::disk($this->disk)->exists($this->path)) {
+            return $this;
+        }
+
         $path = Storage::disk($this->disk)->path($this->path);
         $image = Image::make($path);
 
