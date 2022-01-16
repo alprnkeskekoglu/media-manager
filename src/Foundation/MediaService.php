@@ -105,6 +105,10 @@ class MediaService
         if($height) {
             $newName .= '_h' . $height;
         }
+        if($this->quality != 90) {
+            $newName .= '_q' . $this->quality;
+        }
+
         $newName .= '.' . $this->extension;
         $newPath = 'medias/' . $newName;
 
