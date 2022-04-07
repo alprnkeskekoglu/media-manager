@@ -1,6 +1,6 @@
 <?php
 
-namespace Dawnstar\MediaManager\Foundation;
+namespace Dawnstar\MediaManager\Services;
 
 use Dawnstar\MediaManager\Models\Folder;
 use Dawnstar\MediaManager\Models\Media;
@@ -72,6 +72,7 @@ class MediaService
 
     public bool $webp = false;
     public int $quality = 90;
+    public bool $default = false;
 
     /**
      * MediaService constructor.
@@ -95,27 +96,31 @@ class MediaService
 
     public function resize(int $width = null, int $height = null, bool $aspectRatio = true)
     {
+        if($this->default) {
+            return $this;
+        }
+
         $path = Storage::disk($this->disk)->path($this->path);
-        $image = Image::make($path);
 
         $newName = $this->name;
-        if($width) {
+        if ($width) {
             $newName .= '_w' . $width;
         }
-        if($height) {
+        if ($height) {
             $newName .= '_h' . $height;
         }
-        if($this->quality != 90) {
+        if ($this->quality != 90) {
             $newName .= '_q' . $this->quality;
         }
-
         $newName .= '.' . $this->extension;
         $newPath = 'medias/' . $newName;
 
-        if(Storage::disk($this->disk)->exists($newPath)) {
+        if (Storage::disk($this->disk)->exists($newPath)) {
             $media = Media::where('full_name', $newName)->where('type', 3)->first();
         } else {
             $newPath = Storage::disk($this->disk)->path($newPath);
+
+            $image = Image::make($path);
 
             $image = $image->resize($width, $height, function ($constraint) use($width, $height, $aspectRatio){
                 if($aspectRatio && (is_null($width) || is_null($height))) {
@@ -124,7 +129,7 @@ class MediaService
             })->save($newPath, $this->quality);
 
             $media = $this->model->replicate()->fill([
-                'uid' => $this->getUniqueId(),
+                'uid' => getUniqueId(),
                 'type' => 3,
                 'name' => $image->filename,
                 'full_name' => $image->basename,
@@ -139,24 +144,33 @@ class MediaService
         $this->setBasicAttributes();
         $this->setAttributes();
 
+        if ($this->webp) {
+            return $this->convertWebp();
+        }
+
         return $this;
     }
 
     public function rotate(int $degree)
     {
+        if($this->default) {
+            return $this;
+        }
+
         $path = Storage::disk($this->disk)->path($this->path);
-        $image = Image::make($path);
 
         $newName = $this->name . '_r' . $degree . '.' . $this->extension;
         $newPath = 'medias/' . $newName;
 
-        if(Storage::disk($this->disk)->exists($newPath)) {
+        if (Storage::disk($this->disk)->exists($newPath)) {
             $media = Media::where('full_name', $newName)->where('type', 4)->first();
         } else {
             $newPath = Storage::disk($this->disk)->path($newPath);
+
+            $image = Image::make($path);
             $image = $image->rotate($degree)->save($newPath, $this->quality);
             $media = $this->model->replicate()->fill([
-                'uid' => $this->getUniqueId(),
+                'uid' => getUniqueId(),
                 'type' => 4,
                 'name' => $image->filename,
                 'full_name' => $image->basename,
@@ -168,6 +182,11 @@ class MediaService
         $this->setBasicAttributes();
         $this->setAttributes();
 
+
+        if ($this->webp) {
+            return $this->convertWebp();
+        }
+
         return $this;
     }
 
@@ -176,7 +195,12 @@ class MediaService
         $this->setBasicAttributes();
         $this->setAttributes();
 
-        if($this->webp && $this->mime_class == 'image') {
+        $fullUrl = request()->fullUrl();
+        $parsedUrl = parse_url($fullUrl);
+
+        $this->webp = $this->webp && !str($parsedUrl['path'])->startsWith('/dawnstar') && $this->mime_class == 'image' && !$this->default;
+
+        if ($this->webp) {
             $this->convertWebp();
         }
     }
@@ -195,7 +219,7 @@ class MediaService
 
     private function setAttributes()
     {
-        if($this->model && Storage::disk($this->disk)->exists($this->path)) {
+        if ($this->model && Storage::disk($this->disk)->exists($this->path)) {
             $this->url = route('media', $this->model->uid);
             $this->full_name = $this->model->full_name;
             $this->name = $this->model->name;
@@ -204,45 +228,29 @@ class MediaService
             $this->file_size = $this->model->size;
             $this->mime_class = $this->model->mime_class;
             $this->mime_type = $this->model->mime_type;
+            $this->default = false;
         } else {
             $this->url = defaultImage();
+            $this->name = 'default';
+            $this->full_name = 'default.png';
             $this->mime_class = 'image';
             $this->size = ['width' => 150, 'height' => 150];
+            $this->default = true;
         }
     }
 
     private function convertWebp()
     {
-        if(\Str::startsWith(request()->getPathInfo(), '/dawnstar') || !Storage::disk($this->disk)->exists($this->path)) {
-            return $this;
-        }
-
         $path = Storage::disk($this->disk)->path($this->path);
         $image = Image::make($path);
 
         $newName = $this->name . '.webp';
         $newPath = 'medias/' . $newName;
 
-
-        if (Storage::disk($this->disk)->exists($newPath)) {
-            $media = Media::where('full_name', $newName)->where('type', 2)->first();
-        } else {
+        if (!Storage::disk($this->disk)->exists($newPath)) {
             $newPath = Storage::disk($this->disk)->path($newPath);
-            $image = $image->encode('webp', $this->quality)->save($newPath);
-            $media = $this->model->replicate()->fill([
-                'uid' => $this->getUniqueId(),
-                'type' => 2,
-                'name' => $image->filename,
-                'full_name' => $image->basename,
-                'extension' => 'webp',
-                'size' => $image->filesize()
-            ]);
-            $media->save();
+            $image->encode('webp', $this->quality)->save($newPath);
         }
-
-        $this->model = $media;
-        $this->setBasicAttributes();
-        $this->setAttributes();
 
         return $this;
     }
@@ -250,10 +258,5 @@ class MediaService
     private function getModel(): ?Media
     {
         return Media::find($this->id);
-    }
-
-    private function getUniqueId(): string
-    {
-        return substr(md5(uniqid(mt_rand(), true)), 0, 20);
     }
 }

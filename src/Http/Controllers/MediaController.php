@@ -2,7 +2,7 @@
 
 namespace Dawnstar\MediaManager\Http\Controllers;
 
-use Dawnstar\MediaManager\Foundation\MediaUpload;
+use Dawnstar\MediaManager\Services\MediaUploadService;
 use Dawnstar\MediaManager\Models\Media;
 use Dawnstar\MediaManager\Models\ModelMedia;
 use Illuminate\Http\Request;
@@ -16,14 +16,24 @@ class MediaController extends Controller
     {
         $media = Media::where('uid', $uid)->first();
 
-        if(is_null($media)) {
+        if (is_null($media)) {
             return defaultImage();
         }
 
         $disk = $media->private ? 'private' : 'public';
-        $path = Storage::disk($disk)->path($media->path);
 
-        return response()->file($path);
+        $mediaPath = Storage::disk($disk)->path($media->path);
+
+        if (setting('webp_status', false) && $media->mime_class == 'image') {
+
+            $path = str_replace('.' . $media->extension, '.webp', $media->path);
+
+            if (Storage::disk($disk)->exists($path)) {
+                $mediaPath = Storage::disk($disk)->path($path);
+            }
+        }
+
+        return response()->file($mediaPath);
     }
 
     public function index(Request $request)
@@ -93,7 +103,7 @@ class MediaController extends Controller
         $url = $request->get('url');
         $medias = $request->allFiles();
 
-        $mediaUpload = new MediaUpload($private, $folder_id);
+        $mediaUpload = new MediaUploadService($private, $folder_id);
         try {
             if (count($medias)) {
                 foreach ($medias as $media) {
