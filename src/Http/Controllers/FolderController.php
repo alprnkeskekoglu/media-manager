@@ -34,6 +34,7 @@ class FolderController extends Controller
     public function store(FolderRequest $request)
     {
         $data = $request->validated();
+        $data['name'] = slugify($data['name']);
 
         Folder::create($data);
 

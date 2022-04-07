@@ -13,9 +13,9 @@ function media(int|Media $media = null) {
     if(is_null($media)) {
         return defaultImage();
     } elseif(is_integer($media)) {
-        return new \Dawnstar\MediaManager\Foundation\MediaService($media);
+        return new \Dawnstar\MediaManager\Services\MediaService($media);
     } else {
-        return new \Dawnstar\MediaManager\Foundation\MediaService($media->id);
+        return new \Dawnstar\MediaManager\Services\MediaService($media->id);
     }
 }
 

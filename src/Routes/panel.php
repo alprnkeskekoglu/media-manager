@@ -4,16 +4,21 @@ use Dawnstar\MediaManager\Http\Controllers\MainController;
 use Dawnstar\MediaManager\Http\Controllers\FolderController;
 use Dawnstar\MediaManager\Http\Controllers\MediaController;
 
-Route::get('/',  [MainController::class, 'index']);
-Route::get('translations',  [MainController::class, 'translations']);
-Route::get('getStorageStatus', [MainController::class, 'getStorageStatus']);
+Route::controller(MainController::class)->group(function () {
+    Route::get('/', 'index');
+    Route::get('translations', 'translations');
+    Route::get('getStorageStatus', 'getStorageStatus');
+});
 
 Route::apiResource('folders', FolderController::class);
-Route::post('folders/recover', [FolderController::class, 'recover']);
-Route::post('folders/force-delete', [FolderController::class, 'forceDelete']);
+Route::controller(FolderController::class)->group(function () {
+    Route::post('folders/recover', 'recover');
+    Route::post('folders/force-delete', 'forceDelete');
+});
 
-Route::get('medias/getSelected', [MediaController::class, 'getSelected']);
 Route::apiResource('medias', MediaController::class);
-Route::post('medias/recover', [MediaController::class, 'recover']);
-Route::post('medias/force-delete', [MediaController::class, 'forceDelete']);
-
+Route::controller(MediaController::class)->group(function () {
+    Route::get('medias/getSelected', 'getSelected');
+    Route::post('medias/recover', 'recover');
+    Route::post('medias/force-delete', 'forceDelete');
+});

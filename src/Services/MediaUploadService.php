@@ -1,6 +1,6 @@
 <?php
 
-namespace Dawnstar\MediaManager\Foundation;
+namespace Dawnstar\MediaManager\Services;
 
 use Dawnstar\MediaManager\Models\Folder;
 use Dawnstar\MediaManager\Models\Media;
@@ -9,7 +9,7 @@ use Dotenv\Exception\InvalidFileException;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\File;
 
-class MediaUpload
+class MediaUploadService
 {
     /**
      * @var bool
